@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 塔克拉玛干植物"光合重塑"——Z5002 科学探究版作业评价</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            background: #eaf5e3;
+            background-image: radial-gradient(circle at 10% 20%, rgba(200, 215, 160, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(180, 200, 140, 0.12) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #2d4a2a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 32px 36px 40px;
+            box-shadow: 0 20px 60px rgba(60, 80, 40, 0.12), 0 4px 20px rgba(60, 80, 40, 0.06);
+            border: 1px solid rgba(180, 210, 150, 0.3);
+        }
+
+        .header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
+            padding-bottom: 18px; border-bottom: 2px solid rgba(160, 195, 130, 0.35);
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .header-icon { font-size: 36px; line-height: 1; }
+        .header-title h1 { font-size: 24px; font-weight: 700; color: #1f4a1a; letter-spacing: 0.5px; }
+        .header-title .sub { font-size: 14px; color: #5d7a4a; font-weight: 400; margin-top: 2px; }
+        .header-badge {
+            background: #d4e8c4; padding: 8px 20px; border-radius: 40px;
+            font-size: 14px; font-weight: 500; color: #2a5a22;
+            border: 1px solid #b8d4a0; box-shadow: inset 0 1px 3px rgba(255,255,255,0.6);
+        }
+
+        .context-area {
+            background: #fdf8ee; border-radius: 20px; padding: 22px 26px;
+            margin-bottom: 22px; border-left: 6px solid #d4b87a;
+            box-shadow: 0 2px 12px rgba(150, 120, 60, 0.08);
+        }
+        .context-area .c-title { font-size: 16px; font-weight: 600; color: #6a5525; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .context-area p { font-size: 15px; line-height: 1.8; color: #4a3a2a; margin-bottom: 8px; }
+        .context-area p:last-child { margin-bottom: 0; }
+        .context-area .core-question {
+            background: #f8f0dc; border: 2px dashed #d4c89a; border-radius: 14px;
+            padding: 12px 18px; margin-top: 12px; font-size: 15.5px; font-weight: 600; color: #6a5525;
+        }
+        .context-area .ref-note { font-size: 12.5px; color: #9a8555; margin-top: 10px; }
+
+        .helper-box {
+            background: #f4faf0; border: 2px dashed #c8dfb0; border-radius: 14px;
+            padding: 14px 18px; margin-top: 12px; font-size: 14px; line-height: 1.75; color: #3a5a30;
+        }
+        .helper-box .hb-title { font-weight: 600; color: #2a5a22; margin-bottom: 4px; }
+
+        .stepper {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between;
+            margin-bottom: 26px; background: #fafff7; border-radius: 18px;
+            padding: 14px 16px; border: 2px solid #dce8ce;
+        }
+        .step-item {
+            display: flex; align-items: center; gap: 7px; padding: 5px 12px;
+            border-radius: 30px; font-size: 13.5px; font-weight: 500; color: #5d7a4a;
+            cursor: pointer; transition: all 0.2s; user-select: none; text-decoration: none;
+        }
+        .step-item:hover { background: #eef6e8; }
+        .step-item .num {
+            width: 24px; height: 24px; border-radius: 50%; background: #d4e8c4;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: #2a5a22; flex-shrink: 0;
+        }
+        .step-item.done .num { background: #4f8a3a; color: #fff; }
+        .step-item.done { color: #2d5a27; }
+        .step-arrow { color: #b8d4a0; font-size: 15px; align-self: center; }
+
+        .stage {
+            background: #fafff7; border-radius: 20px; padding: 24px 28px;
+            margin-bottom: 24px; border: 2px solid #dce8ce;
+            box-shadow: 0 2px 12px rgba(100, 130, 70, 0.06);
+            scroll-margin-top: 20px;
+        }
+        .stage-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+        .stage-num {
+            width: 34px; height: 34px; border-radius: 50%; background: #7cad5a; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 17px; font-weight: 700; flex-shrink: 0;
+        }
+        .stage-title { font-size: 17.5px; font-weight: 700; color: #1f4a1a; }
+        .stage-tag {
+            background: #d4e8c4; color: #2a5a22; font-size: 12.5px; font-weight: 500;
+            padding: 3px 14px; border-radius: 30px; border: 1px solid #b8d4a0;
+        }
+        .stage-tag.optional { background: #f0e8d0; color: #6a5525; border-color: #d4c89a; }
+        .stage-status { margin-left: auto; font-size: 13px; font-weight: 600; padding: 3px 14px; border-radius: 30px; }
+        .stage-status.ok { background: #b8d8a0; color: #1f5a18; }
+        .stage-status.part { background: #f0e0c8; color: #7a5a2a; }
+        .stage-status.todo { background: #eee; color: #888; }
+
+        .q-block { margin-bottom: 18px; }
+        .q-block .q-label { font-size: 15px; font-weight: 600; color: #1f4a1a; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .q-block .q-label .no { background: #7cad5a; color: #fff; font-size: 12px; padding: 2px 12px; border-radius: 30px; font-weight: 500; flex-shrink: 0; }
+        .q-text { font-size: 15px; line-height: 1.75; color: #2d4a2a; margin-bottom: 10px; }
+        .q-text .blank { color: #4f8a3a; font-weight: 700; letter-spacing: 2px; }
+        .q-sub { font-size: 13.5px; color: #6a8a58; margin-top: 6px; }
+
+        .scheme-box {
+            background: #fff; border: 2px solid #dce8ce; border-radius: 14px;
+            padding: 14px 18px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #2d4a2a;
+        }
+        .scheme-box .s-name { font-weight: 700; color: #1f4a1a; margin-bottom: 4px; }
+
+        .chips { display: flex; flex-direction: column; gap: 9px; }
+        .chip {
+            background: #fff; border: 2px solid #dce8ce; border-radius: 14px;
+            padding: 10px 16px; font-size: 14.5px; line-height: 1.6; color: #2d4a2a;
+            cursor: pointer; transition: all 0.18s; user-select: none;
+        }
+        .chip:hover { border-color: #a8cc8a; background: #f6fcf0; }
+        .chip.on { border-color: #4f8a3a; background: #e4f0d8; box-shadow: 0 0 0 3px rgba(79,138,58,0.15); }
+        .chip .cno { font-weight: 700; color: #4f8a3a; margin-right: 6px; }
+
+        .pred-row {
+            background: #fff; border: 2px solid #dce8ce; border-radius: 14px;
+            padding: 14px 18px; display: flex; flex-wrap: wrap; align-items: center;
+            gap: 8px; font-size: 15px; line-height: 2.2; color: #2d4a2a;
+        }
+        input.itext {
+            padding: 6px 12px; font-size: 14.5px; border: 2px solid #d4e4c4; border-radius: 12px;
+            background: #fff; color: #1e3a1a; font-family: inherit;
+        }
+        input.itext:focus { outline: none; border-color: #7cad5a; box-shadow: 0 0 0 4px rgba(120,180,80,0.12); }
+        input.itext::placeholder { color: #a8bfa0; }
+        input.itext.w1 { width: 150px; }
+        input.itext.w2 { width: 130px; }
+
+        .instrument-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+        @media (max-width: 700px) { .instrument-grid { grid-template-columns: 1fr; } }
+        .instrument-item {
+            background: #f4faf0; border-radius: 14px; padding: 12px 16px;
+            border: 2px solid #dce8ce; transition: border-color 0.25s, background 0.25s;
+            display: flex; align-items: center; gap: 14px; cursor: pointer; user-select: none;
+        }
+        .instrument-item:hover { border-color: #b8d4a0; background: #eef6e8; }
+        .instrument-item.selected { border-color: #4f8a3a; background: #e4f0d8; box-shadow: 0 0 0 3px rgba(79,138,58,0.15); }
+        .instrument-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #4f8a3a; cursor: pointer; flex-shrink: 0; }
+        .instrument-item .icon { font-size: 32px; line-height: 1; flex-shrink: 0; width: 40px; text-align: center; }
+        .instrument-item .icon .real-instrument-icon { width: 40px; height: 40px; display: block; }
+        .instrument-item .info .name { font-weight: 600; font-size: 15.5px; color: #1f4a1a; }
+
+        .ans-row { margin-top: 4px; }
+        .ans-row label.alabel { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15.5px; color: #1f4a1a; margin-bottom: 8px; }
+        .word-count { font-size: 13px; color: #6a8a58; background: #eef6e8; padding: 2px 14px; border-radius: 30px; font-weight: 400; }
+        textarea.ta {
+            width: 100%; min-height: 96px; padding: 14px 18px; font-size: 15px; line-height: 1.7;
+            border: 2px solid #d4e4c4; border-radius: 16px; background: #fafff7; color: #1e3a1a;
+            resize: vertical; transition: border-color 0.25s, box-shadow 0.25s; font-family: inherit;
+        }
+        textarea.ta:focus { outline: none; border-color: #7cad5a; box-shadow: 0 0 0 6px rgba(120,180,80,0.12); background: #fff; }
+        textarea.ta::placeholder { color: #a8bfa0; }
+
+        .pred-echo {
+            background: #eef6e8; border-left: 4px solid #7cad5a; border-radius: 10px;
+            padding: 10px 16px; margin-bottom: 10px; font-size: 14px; line-height: 1.7; color: #2d5a27;
+        }
+        .pred-echo .pe-title { font-weight: 600; margin-bottom: 2px; }
+
+        .btn {
+            padding: 11px 30px; font-size: 15.5px; font-weight: 600; border: none;
+            border-radius: 40px; cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #e8f0e0; color: #2d5a27; font-family: inherit;
+        }
+        .btn-primary { background: #4f8a3a; color: #fff; box-shadow: 0 4px 14px rgba(70,130,50,0.25); }
+        .btn-primary:hover { background: #3f7a2e; transform: translateY(-2px); }
+        .btn-danger-outline { background: transparent; border: 2px solid #e0c8c0; color: #8a6a5a; }
+        .btn-danger-outline:hover { background: #fdf0ec; border-color: #c99a8a; }
+        .btn-small {
+            padding: 4px 14px; font-size: 13px; font-weight: 600; border-radius: 30px;
+            cursor: pointer; background: #d4e8c4; color: #1f4a1a;
+            border: 1px solid #b8d4a0; transition: all 0.2s; font-family: inherit;
+        }
+        .btn-small:hover { background: #c8dfb0; border-color: #7cad5a; }
+
+        .stage-feedback {
+            display: none; margin-top: 14px; background: #fff; border-radius: 14px;
+            padding: 14px 18px; border: 2px solid #dce8ce; font-size: 14.5px; line-height: 1.75; color: #1e3a1a;
+        }
+        .stage-feedback.show { display: block; animation: fadeSlide 0.3s ease; }
+        .stage-feedback .fb-line { margin-bottom: 6px; }
+        .stage-feedback .ok-line { color: #2d7a20; }
+        .stage-feedback .bad-line { color: #a85a3a; }
+        .level-banner {
+            font-weight: 700; font-size: 15.5px; padding: 9px 14px; border-radius: 10px;
+            margin-bottom: 10px; line-height: 1.5;
+        }
+        .level-banner.lv3 { background: #e2f3d5; color: #1f5a1a; border: 2px solid #7cad5a; }
+        .level-banner.lv2 { background: #eaf5df; color: #2a5a22; border: 2px solid #a5c98a; }
+        .level-banner.lv1 { background: #fdf3dd; color: #7a5a15; border: 2px solid #e0c68a; }
+        .level-banner.lv0 { background: #fbe4e0; color: #8a2a1a; border: 2px solid #e0a094; }
+
+        @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        /* ---- 记录表搭建器 ---- */
+        .builder-area { margin-top: 4px; }
+        .builder-sub { font-weight: 600; font-size: 15px; color: #1f4a1a; margin-bottom: 10px; }
+        .variety-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        .variety-check, .indicator-check, .concentration-check {
+            display: flex; align-items: center; gap: 8px; background: #f4faf0;
+            padding: 7px 14px; border-radius: 10px; border: 2px solid #dce8ce;
+            cursor: pointer; transition: all 0.2s; font-size: 14px; color: #1e3a1a; user-select: none;
+        }
+        .variety-check:hover, .indicator-check:hover, .concentration-check:hover { border-color: #b8d4a0; background: #eef6e8; }
+        .variety-check.selected, .indicator-check.selected, .concentration-check.selected {
+            border-color: #4f8a3a; background: #e4f0d8; box-shadow: 0 0 0 3px rgba(79,138,58,0.12);
+        }
+        .variety-check input, .indicator-check input, .concentration-check input {
+            width: 16px; height: 16px; accent-color: #4f8a3a; cursor: pointer; flex-shrink: 0;
+        }
+        .indicator-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .indicator-check.recommended { border-color: #7cad5a; background: #eaf5df; }
+        .rec-tag {
+            font-size: 11px; color: #2a5a22; background: #d4e8c4; border-radius: 8px;
+            padding: 1px 7px; white-space: nowrap;
+        }
+        .concentration-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+        @media (max-width: 700px) { .indicator-grid { grid-template-columns: 1fr 1fr; } }
+        .option-row {
+            display: flex; flex-wrap: wrap; gap: 24px; margin: 14px 0 18px;
+            padding: 14px 0; border-top: 1px solid #dce8ce; border-bottom: 1px solid #dce8ce;
+        }
+        .option-row .option-item { display: flex; align-items: center; gap: 8px; font-size: 15px; color: #1e3a1a; cursor: pointer; }
+        .option-row .option-item input { width: 18px; height: 18px; accent-color: #4f8a3a; cursor: pointer; }
+        .table-preview-wrap {
+            margin-top: 8px; overflow-x: auto; border-radius: 12px;
+            border: 1px solid #dce8ce; background: #fff;
+        }
+        .table-preview-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 480px; }
+        .table-preview-wrap th {
+            background: #dce8ce; color: #1f4a1a; font-weight: 600; padding: 8px 12px;
+            text-align: center; border: 1px solid #c8d8b8; white-space: nowrap;
+        }
+        .table-preview-wrap td { padding: 8px 12px; text-align: center; border: 1px solid #dce8ce; color: #1e3a1a; }
+        .table-preview-wrap .row-label { font-weight: 500; background: #f4faf0; }
+        .table-preview-wrap .empty-cell { color: #b0b8a8; font-size: 12px; }
+        .table-preview-wrap .group-tag {
+            font-size: 12px; padding: 2px 10px; border-radius: 20px;
+            background: #d4e8c4; color: #1f4a1a; display: inline-block;
+        }
+        .table-preview-wrap .group-tag.experiment { background: #f0e0c8; }
+        .builder-stat { margin-top: 8px; font-size: 13px; color: #6a8a58; }
+
+        .data-table-wrap { overflow-x: auto; margin: 12px 0 6px; border-radius: 12px; border: 2px solid #dce8ce; background: #fff; }
+        table.data-table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 660px; }
+        table.data-table th, table.data-table td { border: 1px solid #e0ecd4; padding: 9px 12px; text-align: center; color: #2d4a2a; }
+        table.data-table th { background: #e4f0d8; color: #1f4a1a; font-weight: 600; white-space: nowrap; }
+        table.data-table td.var { font-weight: 700; color: #1f4a1a; background: #f6fcf0; }
+        .table-note { font-size: 12.5px; color: #6a8a58; line-height: 1.6; margin-bottom: 8px; }
+
+        .overall-area {
+            background: #f4faf0; border-radius: 20px; padding: 24px 28px;
+            margin-bottom: 24px; border: 2px solid #c8dfb0;
+        }
+        .overall-area .o-title { font-size: 18px; font-weight: 700; color: #1f4a1a; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+        .overall-result { display: none; }
+        .overall-result.show { display: block; animation: fadeSlide 0.35s ease; }
+        .overall-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+        .ov-chip { padding: 6px 16px; border-radius: 30px; font-size: 13.5px; font-weight: 600; background: #eee; color: #777; }
+        .ov-chip.ok { background: #b8d8a0; color: #1f5a18; }
+        .ov-chip.part { background: #f0e0c8; color: #7a5a2a; }
+        .ov-chip.l3 { background: #7cad5a; color: #fff; box-shadow: 0 3px 10px rgba(70,130,50,0.25); }
+        .ov-summary-box { background: #fff; border-radius: 14px; padding: 16px 20px; border-left: 4px solid #7cad5a; font-size: 15px; line-height: 1.8; white-space: pre-wrap; }
+
+        .history-area { margin-top: 8px; }
+        .history-area .h-title {
+            font-size: 17px; font-weight: 600; color: #1f4a1a; display: flex; align-items: center;
+            gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #dce8ce; flex-wrap: wrap;
+        }
+        .history-area .h-title .count { font-weight: 400; font-size: 14px; color: #6a8a58; background: #eef6e8; padding: 0 14px; border-radius: 30px; }
+        .history-area .h-title .control-btns { margin-left: auto; display: flex; gap: 8px; }
+        .history-list { display: flex; flex-direction: column; gap: 12px; max-height: 420px; overflow-y: auto; padding-right: 6px; }
+        .history-list::-webkit-scrollbar { width: 5px; }
+        .history-list::-webkit-scrollbar-track { background: #eaf5e3; border-radius: 10px; }
+        .history-list::-webkit-scrollbar-thumb { background: #b8d4a0; border-radius: 10px; }
+        .history-item {
+            background: #fafff7; border-radius: 16px; padding: 12px 18px;
+            border: 1px solid #e0ecd4; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px;
+        }
+        .history-item .h-level { flex: 0 0 96px; font-weight: 700; font-size: 15px; color: #2d5a27; padding: 2px 0; }
+        .history-item .h-level.l0 { color: #8a5a4a; }
+        .history-item .h-level.l1 { color: #4a7a3a; }
+        .history-item .h-level.l2 { color: #2d7a20; }
+        .history-item .h-level.l3 { color: #1f6a12; }
+        .history-item .h-body { flex: 1; min-width: 160px; }
+        .history-item .h-body .h-text {
+            font-size: 14px; line-height: 1.6; color: #1e3a1a; word-break: break-word;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .history-item .h-body .h-text.expand { -webkit-line-clamp: unset; overflow: visible; }
+        .history-item .h-body .h-meta { font-size: 12.5px; color: #7a9a6a; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .history-item .h-body .h-meta .toggle-text {
+            color: #2a6a1e; cursor: pointer; font-weight: 600; background: #e0ecd4;
+            border: 1px solid #b8d4a0; padding: 2px 14px; border-radius: 30px; font-size: 12px; user-select: none;
+        }
+        .history-item .h-body .h-meta .stage-tag-sm { background: #eef6e8; padding: 2px 12px; border-radius: 30px; color: #4a6a3a; font-weight: 500; }
+        .history-empty { color: #7a9a6a; font-size: 15px; padding: 20px 0 10px; text-align: center; background: #f6fcf0; border-radius: 16px; border: 2px dashed #d4e4c4; }
+
+        details.teacher-panel {
+            margin-top: 26px; background: #fdf8ee; border: 2px solid #e4d8b8;
+            border-radius: 18px; padding: 0; overflow: hidden;
+        }
+        details.teacher-panel summary {
+            cursor: pointer; padding: 16px 24px; font-size: 16px; font-weight: 700; color: #6a5525;
+            user-select: none; list-style: none;
+        }
+        details.teacher-panel summary::-webkit-details-marker { display: none; }
+        details.teacher-panel summary::before { content: '🔒 '; }
+        details.teacher-panel[open] summary::before { content: '🔓 '; }
+        .teacher-body { padding: 0 24px 22px; font-size: 14.5px; line-height: 1.85; color: #4a3a2a; }
+        .teacher-body h4 { color: #6a5525; font-size: 15px; margin: 16px 0 6px; }
+        .teacher-body .ans-item { margin-bottom: 8px; }
+        .teacher-body .table-scroll { overflow-x: auto; }
+        .teacher-body table { border-collapse: collapse; width: 100%; font-size: 13.5px; margin: 8px 0; min-width: 560px; }
+        .teacher-body table th, .teacher-body table td { border: 1px solid #e0d8c0; padding: 7px 10px; text-align: left; }
+        .teacher-body table th { background: #f4ecd8; color: #6a5525; }
+
+        .sand-dune {
+            display: block; width: 100%; height: 8px;
+            background: linear-gradient(90deg, #e8d5b5 0%, #e8d5b5 40%, transparent 40%, transparent 60%, #e8d5b5 60%, #e8d5b5 100%);
+            background-size: 60px 8px; opacity: 0.3; margin: 12px 0 4px; border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px 18px 28px; }
+            .header-title h1 { font-size: 20px; }
+            .stage { padding: 18px; }
+            .step-item { padding: 4px 8px; font-size: 12.5px; }
+            .step-item .num { width: 20px; height: 20px; font-size: 11.5px; }
+            .step-arrow { display: none; }
+            .stage-status { margin-left: 0; }
+            input.itext.w1 { width: 120px; }
+            input.itext.w2 { width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">🌾</div>
+            <div class="header-title">
+                <h1>塔克拉玛干植物"光合重塑"</h1>
+                <div class="sub">水稻耐盐品种筛选 · 科学探究完整链条 · 作业评价系统</div>
+            </div>
+        </div>
+        <div class="header-badge">📖 第5课时 Z5002</div>
+    </div>
+
+    <div class="context-area">
+        <div class="c-title">🌍 情境 · 研究背景</div>
+        <p>塔克拉玛干沙漠边缘耕地盐渍化严重，中国科学家进行水稻耐盐品种筛选，向盐碱地"要"回粮仓。</p>
+        <p><b>Z5002</b>：塔克拉玛干沙漠边缘土壤含盐量普遍为 <b>2～5 g·kg⁻¹</b>。科研人员拟在该地区种植耐盐水稻，现有两个候选耐盐水稻品种：<b>F</b> 和 <b>P</b>，请你按照科学探究的基本思路，帮助科研人员设计并完善实验方案，再根据实验数据筛选出更适应盐渍化环境的品种。</p>
+        <div class="core-question">🎯 核心任务：设计并完善实验方案 → 分析实验数据 → 筛选出更适应盐渍化环境的品种（F / P）</div>
+        <div class="ref-note">📄 情境与数据改编自：王旭明等. 盐胁迫下海水稻抗逆生理响应分析[J]. 中国生态农业学报, 2019, 27(5): 747-756（表5-1 中光合相关数据引自同一作者的硕士学位论文）。</div>
+    </div>
+
+    <div class="stepper" id="stepper">
+        <a class="step-item" href="#stage1" data-step="1"><span class="num">1</span>提出问题</a><span class="step-arrow">➜</span>
+        <a class="step-item" href="#stage2" data-step="2"><span class="num">2</span>作出假设</a><span class="step-arrow">➜</span>
+        <a class="step-item" href="#stage3" data-step="3"><span class="num">3</span>设计方案</a><span class="step-arrow">➜</span>
+        <a class="step-item" href="#stage4" data-step="4"><span class="num">4</span>实施方案</a><span class="step-arrow">➜</span>
+        <a class="step-item" href="#stage5" data-step="5"><span class="num">5</span>得出结论</a><span class="step-arrow">➜</span>
+        <a class="step-item" href="#stage6" data-step="6"><span class="num">6</span>进一步探究</a>
+    </div>
+
+    <!-- ================= 环节1 提出问题 ================= -->
+    <div class="stage" id="stage1">
+        <div class="stage-head">
+            <div class="stage-num">1</div>
+            <div class="stage-title">提出问题</div>
+            <span class="stage-tag">科学探究 · 生成可检验的问题</span>
+            <span class="stage-status todo" id="st-status-1">未完成</span>
+        </div>
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(1)题</span>开放作答</div>
+            <div class="q-text">针对上述任务，提出一个<b>你要探究的问题</b>。</div>
+            <div class="ans-row">
+                <label class="alabel">✍️ 我的问题 <span class="word-count" id="wc-s1">0 字</span></label>
+                <textarea class="ta" id="s1Input" placeholder="提示：好问题的标准——指向明确的变量关系，可以通过实验检验……"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-primary" data-submit="1">📤 提交本环节</button>
+        <div class="stage-feedback" id="fb-1"></div>
+    </div>
+
+    <!-- ================= 环节2 作出假设 ================= -->
+    <div class="stage" id="stage2">
+        <div class="stage-head">
+            <div class="stage-num">2</div>
+            <div class="stage-title">作出假设</div>
+            <span class="stage-tag">假设 — 预期绑定</span>
+            <span class="stage-status todo" id="st-status-2">未完成</span>
+        </div>
+        <div class="q-block">
+            <div class="q-label"><span class="no">衔接</span>你的问题指向这一假设</div>
+            <div class="q-text">你在第(1)题提出的问题，正是检验下面这个假设的一个具体侧面。针对"F 和 P 谁更耐盐"这一核心疑问，研究人员提出假设：<br><b>“与 F 品种相比，盐胁迫下 P 品种的耐盐性更强。”</b></div>
+            <div class="q-label" style="margin-top:14px;"><span class="no">第(2)题</span>写出与该假设匹配的预期结果</div>
+            <div class="pred-row">
+                若假设成立，则与 F 品种相比，盐胁迫下 P 品种的
+                <input class="itext w1" id="p1ind" placeholder="生理指标①">
+                应 <input class="itext w2" id="p1dir" placeholder="变化方向">，
+                <input class="itext w1" id="p2ind" placeholder="生理指标②">
+                应 <input class="itext w2" id="p2dir" placeholder="变化方向">。
+            </div>
+            <div class="q-sub">要求：至少写出两项指标及其变化方向。</div>
+        </div>
+        <button class="btn btn-primary" data-submit="2">📤 提交本环节</button>
+        <div class="stage-feedback" id="fb-2"></div>
+    </div>
+
+    <!-- ================= 环节3 设计方案 ================= -->
+    <div class="stage" id="stage3">
+        <div class="stage-head">
+            <div class="stage-num">3</div>
+            <div class="stage-title">设计方案</div>
+            <span class="stage-tag">方案评价与完善 · 仪器选择</span>
+            <span class="stage-status todo" id="st-status-3">未完成</span>
+        </div>
+
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(3)题</span>评价并完善实验方案</div>
+            <div class="q-text">小组讨论时，同学们提出了以下实验方案：</div>
+            <div class="scheme-box">
+                <div class="s-name">小组方案</div>
+                随机选取 F、P 水稻幼苗各 30 株，每品种平均分为 4 组，分别种植在盐浓度为 2、3、4、5 g·kg⁻¹ 的土壤中，同一盐浓度下将两品种混种在同一区域中；在相同且适宜的条件下培养一段时间后，从每组中随机选取 F、P 水稻各 1 株，测定相关生理指标。
+            </div>
+            <div class="ans-row">
+                <label class="alabel">✍️ 我的评价与完善（先指出不足，再写出修正） <span class="word-count" id="wc-s3">0 字</span></label>
+                <textarea class="ta" id="s3Input" placeholder="不足：①……②……&#10;修正：①……②……"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-primary" data-submit="3" data-part="q3">📤 提交第(3)题</button>
+        <div class="stage-feedback" id="fb-3-q3"></div>
+
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(4)题</span>选择检测仪器（至少选 2 项）并说明理由</div>
+            <div class="q-text">根据你打算检测的因变量生理指标，从下列仪器中至少选择两项作为检测仪器。</div>
+            <div class="instrument-grid" id="instrumentGrid">
+                <div class="instrument-item" data-value="1">
+                    <input type="checkbox" id="inst1" value="1">
+                    <span class="icon"><svg class="real-instrument-icon" viewBox="0 0 100 80" aria-label="分光光度计">
+<defs>
+ <linearGradient id="spBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f3"/><stop offset="1" stop-color="#aeb5b0"/></linearGradient>
+ <linearGradient id="spPanel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#333a36"/><stop offset="1" stop-color="#151b18"/></linearGradient>
+</defs>
+<ellipse cx="51" cy="68" rx="36" ry="5" fill="#000" opacity=".12"/>
+<rect x="14" y="20" width="72" height="45" rx="7" fill="url(#spBody)" stroke="#707873" stroke-width="1.5"/>
+<path d="M20 24 Q22 18 29 17 H68 Q78 17 81 24" fill="#d8dcd9" stroke="#737b76" stroke-width="1.5"/>
+<rect x="22" y="27" width="34" height="17" rx="2.5" fill="url(#spPanel)" stroke="#606762"/>
+<rect x="26" y="30" width="26" height="10" rx="1.5" fill="#b6c5b7"/>
+<path d="M28 37 L33 34 L38 36 L44 32 L50 35" fill="none" stroke="#486448" stroke-width="1.4"/>
+<circle cx="69" cy="34" r="8" fill="#d9ddd9" stroke="#6e7771" stroke-width="1.5"/>
+<circle cx="69" cy="34" r="3" fill="#707a73"/>
+<circle cx="69" cy="34" r="1" fill="#313a35"/>
+<rect x="22" y="49" width="20" height="5" rx="2" fill="#8b938e"/>
+<rect x="47" y="48" width="28" height="7" rx="2" fill="#d7dbd8" stroke="#8a928d"/>
+<rect x="50" y="50" width="8" height="3" rx="1" fill="#8e9891"/>
+<rect x="62" y="50" width="8" height="3" rx="1" fill="#8e9891"/>
+<rect x="32" y="14" width="28" height="7" rx="2" fill="#c6ccc8" stroke="#737b76"/>
+</svg></span>
+                    <div class="info"><div class="name">① 分光光度计</div></div>
+                </div>
+                <div class="instrument-item" data-value="2">
+                    <input type="checkbox" id="inst2" value="2">
+                    <span class="icon"><svg class="real-instrument-icon" viewBox="0 0 100 80" aria-label="电导率仪">
+<defs>
+ <linearGradient id="ecBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fafafa"/><stop offset="1" stop-color="#aeb7b1"/></linearGradient>
+</defs>
+<ellipse cx="45" cy="69" rx="30" ry="4" fill="#000" opacity=".11"/>
+<rect x="19" y="8" width="42" height="57" rx="8" fill="url(#ecBody)" stroke="#68736c" stroke-width="1.7"/>
+<rect x="25" y="17" width="30" height="16" rx="2.5" fill="#26312b"/>
+<rect x="28" y="20" width="24" height="10" rx="1.5" fill="#c4d5bf"/>
+<text x="40" y="28" text-anchor="middle" font-size="6.5" font-family="Arial" fill="#4c664b">6.82 mS</text>
+<circle cx="29" cy="43" r="4" fill="#d2d7d3" stroke="#818a84"/>
+<circle cx="40" cy="43" r="4" fill="#d2d7d3" stroke="#818a84"/>
+<circle cx="51" cy="43" r="4" fill="#d2d7d3" stroke="#818a84"/>
+<rect x="29" y="52" width="22" height="4" rx="2" fill="#8c9690"/>
+<path d="M54 55 C69 56 74 63 69 70" fill="none" stroke="#4e5c54" stroke-width="3"/>
+<path d="M69 70 C78 70 81 64 77 59" fill="none" stroke="#4e5c54" stroke-width="3"/>
+<path d="M76 58 L82 54" stroke="#4e5c54" stroke-width="2.5"/>
+<circle cx="83" cy="53" r="3" fill="#d9dfdb" stroke="#59665e"/>
+</svg></span>
+                    <div class="info"><div class="name">② 电导率仪</div></div>
+                </div>
+                <div class="instrument-item" data-value="3">
+                    <input type="checkbox" id="inst3" value="3">
+                    <span class="icon"><svg class="real-instrument-icon" viewBox="0 0 100 80" aria-label="便携式光合仪">
+<defs>
+ <linearGradient id="phBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5f6f4"/><stop offset="1" stop-color="#9fa9a2"/></linearGradient>
+</defs>
+<ellipse cx="48" cy="70" rx="37" ry="4" fill="#000" opacity=".1"/>
+<rect x="10" y="18" width="49" height="39" rx="5" fill="url(#phBody)" stroke="#66736b" stroke-width="1.6"/>
+<rect x="16" y="24" width="29" height="15" rx="2" fill="#222d27"/>
+<rect x="19" y="27" width="23" height="9" rx="1" fill="#bfd0bb"/>
+<path d="M20 34 L25 31 L30 33 L36 28 L41 31" fill="none" stroke="#486348" stroke-width="1.3"/>
+<circle cx="51" cy="31" r="4" fill="#c5ccc7" stroke="#707a74"/>
+<rect x="18" y="45" width="30" height="4" rx="2" fill="#8d9891"/>
+<path d="M59 25 L78 19 Q83 18 84 23 L84 45 Q84 50 79 50 L59 55 Z" fill="#d8ded9" stroke="#68746c" stroke-width="1.5"/>
+<rect x="64" y="25" width="14" height="18" rx="2" fill="#26322c"/>
+<path d="M66 40 L70 36 L73 38 L77 32" fill="none" stroke="#b6cfb1" stroke-width="1.2"/>
+<path d="M57 57 C54 64 47 66 40 68" fill="none" stroke="#53635a" stroke-width="2.5"/>
+<path d="M40 68 C34 65 31 61 30 57" fill="none" stroke="#53635a" stroke-width="2.5"/>
+<path d="M40 68 C46 67 51 69 54 73" fill="none" stroke="#53635a" stroke-width="2.5"/>
+<path d="M31 57 Q39 51 47 57 Q39 63 31 57Z" fill="#6f8e68" stroke="#4e684b"/>
+</svg></span>
+                    <div class="info"><div class="name">③ 便携式光合仪</div></div>
+                </div>
+                <div class="instrument-item" data-value="4">
+                    <input type="checkbox" id="inst4" value="4">
+                    <span class="icon"><svg class="real-instrument-icon" viewBox="0 0 100 80" aria-label="SOD活性检测试剂盒">
+<defs>
+ <linearGradient id="kitBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfaf5"/><stop offset="1" stop-color="#c8c6bb"/></linearGradient>
+</defs>
+<ellipse cx="50" cy="69" rx="37" ry="4" fill="#000" opacity=".1"/>
+<rect x="9" y="17" width="57" height="48" rx="5" fill="url(#kitBox)" stroke="#77766d" stroke-width="1.5"/>
+<rect x="15" y="23" width="45" height="13" rx="2" fill="#dbe6d5"/>
+<text x="37.5" y="32" text-anchor="middle" font-size="8" font-weight="600" font-family="Arial" fill="#496147">SOD ASSAY KIT</text>
+<rect x="16" y="41" width="10" height="18" rx="2" fill="#d9e2dc" stroke="#707c74"/>
+<rect x="30" y="41" width="10" height="18" rx="2" fill="#d9e2dc" stroke="#707c74"/>
+<rect x="44" y="41" width="10" height="18" rx="2" fill="#d9e2dc" stroke="#707c74"/>
+<path d="M18 43 H24 V50 H18Z" fill="#8fac88"/>
+<path d="M32 43 H38 V50 H32Z" fill="#8fac88"/>
+<path d="M46 43 H52 V50 H46Z" fill="#8fac88"/>
+<rect x="71" y="26" width="17" height="37" rx="3" fill="#eef1ed" stroke="#68746d" stroke-width="1.5"/>
+<rect x="74" y="31" width="11" height="18" rx="2" fill="#c9d8cb"/>
+<path d="M76 49 H83 V56 H76Z" fill="#9fb99c"/>
+<path d="M73 21 Q79 15 85 21" fill="none" stroke="#68746d" stroke-width="2"/>
+</svg></span>
+                    <div class="info"><div class="name">④ SOD活性检测试剂盒</div></div>
+                </div>
+            </div>
+            <div style="margin-top: 10px; font-size: 13px; color: #6a8a58;">💡 点击仪器卡片即可勾选，再次点击取消</div>
+            <div class="helper-box" style="margin-top:12px;">
+                <div class="hb-title">📚 学习助手 · 各仪器的使用说明</div>
+                ① 分光光度计：可测定脯氨酸、叶绿素、可溶性糖、可溶性蛋白等物质的含量；② 电导率仪：测定溶液导电能力，反映离子外渗程度；③ 便携式光合仪：田间活体测定净光合速率、气孔导度、胞间CO₂浓度；④ SOD活性检测试剂盒：测定超氧化物歧化酶（SOD）活性。
+            </div>
+            <div class="ans-row" style="margin-top:10px;">
+                <label class="alabel">✍️ 说明理由 <span class="word-count" id="wc-s4">0 字</span></label>
+                <textarea class="ta" id="s4Input" placeholder="选择仪器 → 检测指标 → 该指标与耐盐性的关系……"></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" data-submit="3" data-part="q4">📤 提交第(4)题</button>
+        <div class="stage-feedback" id="fb-3-q4"></div>
+    </div>
+
+    <!-- ================= 环节4 获取数据及分析（记录表） ================= -->
+    <div class="stage" id="stage4">
+        <div class="stage-head">
+            <div class="stage-num">4</div>
+            <div class="stage-title">实施方案 · 获取数据</div>
+            <span class="stage-tag">为你的方案搭建记录表</span>
+            <span class="stage-status todo" id="st-status-4">未完成</span>
+        </div>
+
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(5)题</span>在线设计实验结果记录表</div>
+            <div class="q-text">根据完善后的实验方案，在本页在线设计实验结果记录表，要求：至少列出 2 个你在第(4)题选择的因变量检测指标。</div>
+
+            <div class="builder-area">
+                <div class="builder-sub">📊 搭建记录表：勾选品种、检测指标与盐浓度，表格实时生成预览。</div>
+                <div class="builder-sub" style="font-weight:500; color:#4a6a3a;">选择品种</div>
+                <div class="variety-grid" id="varietyGrid">
+                    <label class="variety-check" data-value="F">
+                        <input type="checkbox" value="F"> 品种F
+                    </label>
+                    <label class="variety-check" data-value="P">
+                        <input type="checkbox" value="P"> 品种P
+                    </label>
+                </div>
+
+                <div class="builder-sub" style="font-weight:500; color:#4a6a3a;">选择检测指标（至少 2 项）</div>
+                <div class="indicator-grid" id="indicatorGrid">
+                    <label class="indicator-check" data-value="脯氨酸含量"><input type="checkbox" value="脯氨酸含量"> 脯氨酸含量</label>
+                    <label class="indicator-check" data-value="叶绿素含量"><input type="checkbox" value="叶绿素含量"> 叶绿素含量</label>
+                    <label class="indicator-check" data-value="可溶性糖含量"><input type="checkbox" value="可溶性糖含量"> 可溶性糖含量</label>
+                    <label class="indicator-check" data-value="SOD活性"><input type="checkbox" value="SOD活性"> SOD活性</label>
+                    <label class="indicator-check" data-value="净光合速率"><input type="checkbox" value="净光合速率"> 净光合速率</label>
+                    <label class="indicator-check" data-value="气孔导度"><input type="checkbox" value="气孔导度"> 气孔导度</label>
+                    <label class="indicator-check" data-value="胞间CO₂浓度"><input type="checkbox" value="胞间CO₂浓度"> 胞间CO₂浓度</label>
+                    <label class="indicator-check" data-value="叶片电导率"><input type="checkbox" value="叶片电导率"> 叶片电导率</label>
+                </div>
+                <div id="indicatorHint" style="display:none; font-size:12.5px; color:#2a5a22; margin:-8px 0 14px;">✦ 标记 = 你在第（4）题所选仪器可检测的指标（建议优先选择）</div>
+
+                <div class="builder-sub" style="font-weight:500; color:#4a6a3a;">选择盐浓度</div>
+                <div class="concentration-grid" id="concentrationGrid">
+                    <label class="concentration-check" data-value="0"><input type="checkbox" value="0"> 0 g·kg⁻¹（对照组）</label>
+                    <label class="concentration-check" data-value="2"><input type="checkbox" value="2"> 2 g·kg⁻¹（实验组）</label>
+                    <label class="concentration-check" data-value="3"><input type="checkbox" value="3"> 3 g·kg⁻¹（实验组）</label>
+                    <label class="concentration-check" data-value="4"><input type="checkbox" value="4"> 4 g·kg⁻¹（实验组）</label>
+                    <label class="concentration-check" data-value="5"><input type="checkbox" value="5"> 5 g·kg⁻¹（实验组）</label>
+                </div>
+
+                <div class="option-row">
+                    <label class="option-item"><input type="checkbox" id="chkReplicate"> 设置重复（3个重复）</label>
+                    <label class="option-item"><input type="checkbox" id="chkAverage"> 计算平均值</label>
+                </div>
+
+                <div class="builder-sub">👁️ 表格预览</div>
+                <div class="table-preview-wrap">
+                    <table id="previewTable">
+                        <thead id="previewHead">
+                            <tr><th>品种</th><th>盐浓度<br>(g·kg⁻¹)</th><th>组别</th></tr>
+                        </thead>
+                        <tbody id="previewBody"></tbody>
+                    </table>
+                </div>
+                <div class="builder-stat">
+                    💡 品种: <span id="varietyDisplay">无</span> ｜ 已选 <span id="indicatorCountDisplay">0</span> 项指标 ｜ 浓度: <span id="concentrationCountDisplay">0</span> 个
+                    ｜ 重复: <span id="replicateDisplay">无</span> ｜ 平均值: <span id="averageDisplay">无</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" data-submit="4">📤 提交本环节</button>
+        <div class="stage-feedback" id="fb-4"></div>
+    </div>
+
+    <!-- ================= 环节5 得出结论 ================= -->
+    <div class="stage" id="stage5">
+        <div class="stage-head">
+            <div class="stage-num">5</div>
+            <div class="stage-title">分析数据 · 得出结论</div>
+            <span class="stage-tag">数据解释与论证</span>
+            <span class="stage-status todo" id="st-status-5">未完成</span>
+        </div>
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(6)题</span>综合分析 · 选出品种</div>
+            <div class="q-text">表5-1 是实验获得的部分数据。请综合分析各项数据，选择适合种植在塔克拉玛干沙漠边缘的水稻品种，并说明理由。</div>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <tr>
+                        <th>品种</th><th>盐浓度<br>(g·kg⁻¹)</th><th>净光合速率<br>相对值</th><th>气孔导度<br>相对值</th><th>胞间CO₂浓度<br>相对值</th><th>脯氨酸<br>(μg·g⁻¹)</th><th>SOD<br>(U·g⁻¹)</th><th>叶片电导率<br>(μs·cm⁻¹)</th>
+                    </tr>
+                    <tr><td class="var" rowspan="2">F</td><td>0</td><td>1.00 Aa</td><td>1.00 Aa</td><td>1.00 Aa</td><td>7.80 Aa</td><td>312.30 Aa</td><td>90.20 Aa</td></tr>
+                    <tr><td>5</td><td>0.96 Aa</td><td>0.54 Ba</td><td>0.82 Ba</td><td>8.80 Ba</td><td>390.20 Ba</td><td>320.30 Ba</td></tr>
+                    <tr><td class="var" rowspan="2">P</td><td>0</td><td>1.00 Aa</td><td>1.00 Aa</td><td>1.00 Aa</td><td>14.30 Ab</td><td>303.30 Ab</td><td>40.80 Ab</td></tr>
+                    <tr><td>5</td><td>1.03 Aa</td><td>0.84 Ab</td><td>0.87 Bb</td><td>21.20 Bb</td><td>323.50 Bb</td><td>135.00 Bb</td></tr>
+                </table>
+            </div>
+            <div class="table-note">表5-1 盐胁迫下两种水稻的生理指标　注：同一列不同大写字母代表同品种相较于 0 g·kg⁻¹ 组差异显著；同一列不同小写字母代表同盐度下不同品种差异显著。</div>
+            <div class="pred-echo" id="predEcho" style="display:none;">
+                <div class="pe-title">📌 提示：你在第(2)题预测——与 F 相比，盐胁迫下 P 的：</div>
+                <div id="predEchoBody"></div>
+                <div style="font-size:13px;color:#6a8a58;margin-top:4px;">作答时可对照表中数据，检验你的预期是否应验。</div>
+            </div>
+            <div class="ans-row">
+                <label class="alabel">✍️ 我的结论与论证 <span class="word-count" id="wc-s6">0 字</span></label>
+                <textarea class="ta" id="s6Input" placeholder="选择的品种：……&#10;理由：（指标对比 → 生理机制 → 耐盐性/固碳能力）……"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-primary" data-submit="5">📤 提交本环节</button>
+        <div class="stage-feedback" id="fb-5"></div>
+    </div>
+
+    <!-- ================= 环节6 进一步探究（选做） ================= -->
+    <div class="stage" id="stage6">
+        <div class="stage-head">
+            <div class="stage-num">6</div>
+            <div class="stage-title">进一步探究</div>
+            <span class="stage-tag optional">选做 · 实验设计</span>
+            <span class="stage-status todo" id="st-status-6">未完成</span>
+        </div>
+        <div class="q-block">
+            <div class="q-label"><span class="no">第(7)题</span>设计农艺技术探究实验（选做）</div>
+            <div class="q-text">科研人员拟在塔克拉玛干沙漠种植<b>你选出</b>的水稻，并采用适宜的农业技术措施来提高水稻的产量。请<b>针对当地制约水稻生长的主要环境问题，结合图5-3的机理思考应对策略</b>，按照实验探究的基本思路进一步设计实验，<b>筛选适合在该区域推广的农业技术</b>。</div>
+            <div class="helper-box" style="margin-top:12px;">
+                <div class="hb-title">📚 图5-3 · 四种农业技术促进水稻生长的机理（任选其一、比较多种或组合施用进行探究）</div>
+                <b>① 有机肥施用</b>：微生物分解→腐殖质增加、团粒结构改善→释放 N、P、K 等养分、缓冲 pH、促进盐分淋洗；<b>② 秸秆覆盖</b>：减少水分蒸发、阻断毛细管水上升；<b>③ 生物碳改良</b>：孔隙保水透气、吸附 Na⁺、提高阳离子交换量；<b>④ 微生物菌剂</b>：微生物在根系定殖、分泌促生长物质、固 N 溶 P 解 K、诱导抗氧化酶活性。<br>
+                <b>跨学科资料包</b>：【物理】毛细管现象——土壤毛细管水上升将深层盐分带至表层；【化学】pH 缓冲原理、离子交换平衡原理。
+            </div>
+            <div class="ans-row" style="margin-top:10px;">
+                <label class="alabel">✍️ 我的实验设计（诊断问题 → 机理选策 → 提出问题 → 做出假设 → 设计方案 → 预期结果） <span class="word-count" id="wc-s7">0 字</span></label>
+                <textarea class="ta" id="s7Input" placeholder="①诊断环境问题：强蒸发→毛细管返盐；Na⁺毒害；干旱贫瘠……&#10;②选择技术与理由（图5-3）：……&#10;③实验设计——提出问题：……&#10;假设：……&#10;方案（自变量、对照组、重复）：……&#10;预期结果（检测指标可参考表5-1）：……"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-primary" data-submit="6">📤 提交本环节（选做）</button>
+        <div class="stage-feedback" id="fb-6"></div>
+    </div>
+
+    <div class="sand-dune"></div>
+
+    <!-- ================= 整体评价 ================= -->
+    <div class="overall-area">
+        <div class="o-title">📊 整体评价</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn btn-primary" id="overallBtn">📈 生成整体评价</button>
+            <button class="btn btn-danger-outline" id="clearHistoryBtn">🧹 清空全部记录</button>
+        </div>
+        <div class="overall-result" id="overallResult" style="margin-top:16px;">
+            <div class="overall-grid" id="overallGrid"></div>
+            <div class="ov-summary-box" id="overallSummary"></div>
+        </div>
+    </div>
+
+    <div class="history-area">
+        <div class="h-title">
+            <span>📜 提交历史</span>
+            <span class="count" id="historyCount">0 条</span>
+            <span class="control-btns">
+                <button class="btn-small" id="expandAllBtn">展开全部</button>
+                <button class="btn-small" id="collapseAllBtn">收起全部</button>
+            </span>
+        </div>
+        <div class="history-list-wrap" id="historyListWrap">
+            <div class="history-list" id="historyList">
+                <div class="history-empty">🌱 暂无提交记录，开始作答吧！</div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+(function() {
+    "use strict";
+
+    // ================= 通用工具 =================
+    function normalizeText(text) {
+        return text.replace(/CO₂/g, 'co2').replace(/CO2/g, 'co2').replace(/二氧化碳/g, 'co2')
+            .toLowerCase().replace(/[，,、。.；;：:！!？?""''（）()\s]+/g, ' ').trim();
+    }
+    function hasAny(text, keywords) {
+        const n = normalizeText(text);
+        return keywords.some(kw => n.includes(kw.toLowerCase()));
+    }
+    function countUnique(text, words) {
+        const n = normalizeText(text);
+        const found = new Set();
+        words.forEach(w => { if (n.includes(w.toLowerCase())) found.add(w); });
+        return found.size;
+    }
+
+    // ================= 关键词表 =================
+    const TREND_WORDS = ['积累', '升高', '下降', '增加', '减少', '降低', '增多', '提高', '不变', '上升', '变小', '增大', '维持', '保持', '升幅', '降幅', '更强', '更弱', '更高', '更低', '更大', '更小', '高于', '低于', '升至', '降至'];
+    const DIR_WORDS = ['升高', '更高', '更多', '增大', '上升', '积累', '更强', '下降', '更少', '更小', '更低', '减少', '降低', '维持', '不变', '保持', '升幅更小', '增幅更小', '幅度更小', '基本不变', '偏高', '偏低', '高于', '低于', '更大', '变多', '变少', '变大', '变小', '变高', '变低', '稳定', '增加', '增多', '减小', '增强', '减弱', '加重', '减轻'];
+    const MECH_WORDS = ['渗透调节', '渗透平衡', '渗透压', '膜损伤', '膜完整性', '膜透性', '细胞膜',
+        '活性氧', '抗氧化', 'sod', '超氧化物歧化酶', '光合作用', '碳固定', '碳同化', '气孔限制', '蒸腾',
+        '光能', '光反应', '暗反应', '光化学', '固碳', '过氧化'];
+    const INDICATOR_WORDS = ['脯氨酸', '电导率', '气孔导度', '净光合', '光合速率', '胞间', 'co2浓度', 'sod', '叶绿素', '可溶性糖'];
+    const PRED_INDICATORS = INDICATOR_WORDS.concat(['气孔', '光合', '膜', '渗透', '蒸腾', '失水', '抗氧化', '活性氧', '可溶性蛋白', '产量', '生物量', '株高', '根长']);
+    const INSTRUMENT_INFO = {
+        1: { name: '①分光光度计', indicators: ['脯氨酸', '叶绿素', '可溶性糖', '可溶性蛋白', 'rubisco', 'atp合酶'] },
+        2: { name: '②电导率仪', indicators: ['电导率', '离子外渗', '相对电导率'] },
+        3: { name: '③便携式光合仪', indicators: ['净光合速率', '气孔导度', '胞间co₂', '光合速率', '光合'] },
+        4: { name: '④SOD活性检测试剂盒', indicators: ['sod', '超氧化物歧化酶', '抗氧化酶', '活性氧', 'cat', 'pod'] }
+    };
+
+    // ================= 状态 =================
+    const STORAGE_KEY = 'z5002_inq_v4_history';
+    const STATE_KEY = 'z5002_inq_v4_state';
+    const stageState = {};
+    try {
+        const saved = JSON.parse(localStorage.getItem(STATE_KEY) || '{}');
+        Object.assign(stageState, saved);
+    } catch (e) {}
+
+    function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify(stageState)); }
+
+    // ================= 记录表搭建器：选择读取 =================
+    function getSelectedVarieties() {
+        const s = [];
+        document.querySelectorAll('#varietyGrid input[type="checkbox"]').forEach(cb => { if (cb.checked) s.push(cb.value); });
+        return s;
+    }
+    function getSelectedIndicators() {
+        const s = [];
+        document.querySelectorAll('#indicatorGrid input[type="checkbox"]').forEach(cb => { if (cb.checked) s.push(cb.value); });
+        return s;
+    }
+    function getSelectedConcentrations() {
+        const s = [];
+        document.querySelectorAll('#concentrationGrid input[type="checkbox"]').forEach(cb => { if (cb.checked) s.push(parseInt(cb.value)); });
+        s.sort((a, b) => a - b);
+        return s;
+    }
+    function hasControlGroup(concs) { return concs.includes(0); }
+    function isAllExperimentConcsSelected(concs) { return [2, 3, 4, 5].every(c => concs.includes(c)); }
+
+    // ================= 预测（第2题）读取与回显 =================
+    function getPredictionPairs() {
+        const pairs = [];
+        for (let i = 1; i <= 2; i++) {
+            const ind = document.getElementById('p' + i + 'ind').value.trim();
+            const dir = document.getElementById('p' + i + 'dir').value.trim();
+            if (ind || dir) pairs.push({ ind: ind, dir: dir });
+        }
+        return pairs;
+    }
+    function renderPredictionEcho() {
+        const box = document.getElementById('predEcho');
+        const body = document.getElementById('predEchoBody');
+        const saved = stageState.prediction;
+        const pairs = (saved && saved.pairs) ? saved.pairs : [];
+        const valid = pairs.filter(p => p.ind);
+        if (valid.length === 0) { box.style.display = 'none'; return; }
+        box.style.display = 'block';
+        body.innerHTML = valid.map(p => {
+            const safe = s => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return '· ' + safe(p.ind) + ' 应 ' + (safe(p.dir) || '（未填方向）');
+        }).join('<br>');
+    }
+
+    // ================= 各环节评分 =================
+
+    // 环节1：提出问题（开放）
+    function evalStage1() {
+        const t = document.getElementById('s1Input').value.trim();
+        let lines = [];
+        if (!t) return { level: 0, ok: false, lines: ['❌ 未作答。'] };
+        const isQ = /[?？]/.test(t) || hasAny(t, ['是否', '吗', '为什么', '如何', '会不会', '有没有', '哪种', '哪个', '谁']);
+        const varHit = hasAny(t, ['盐', '浓度', '胁迫', '品种', 'f', 'p', '脯氨酸', '电导率', '光合', '气孔', 'sod', '胞间', '耐盐', 'co2', '叶绿素', '糖']);
+        const specHit = hasAny(t, ['净光合', '脯氨酸', '电导率', '气孔', 'sod', '胞间', '叶绿素', '可溶性糖', '膜', '耐盐']);
+        const compHit = hasAny(t, ['差异', '不同', '区别', '相比', '影响', '变化']);
+        if (!varHit) {
+            lines.push('❌ 提出的问题与情境关联不明显。请围绕"盐胁迫下 F、P 两品种的响应差异"来提问。');
+            lines.push('💡 其他同学的问题示例：·盐胁迫对 F、P 叶片净光合速率的影响是否存在差异？·盐胁迫下两品种脯氨酸含量变化有何不同？·耐盐性强弱与细胞膜完整性有关吗？');
+            return { level: 0, ok: false, lines: lines };
+        }
+        if (hasAny(t, ['适合', '推广', '种植', '更好种'])) {
+            lines.push('✅ 你提出的是核心问题本身（决策类问题）——很有胆识！');
+            lines.push('⚠️ 但"适合推广"涉及耐盐、产量、水耗、生态等多维度，不能由单一实验直接检验。试着把它分解为可检验的子问题：从渗透调节、膜稳定性、光合维持等角度入手，一次聚焦一个可测量的指标。');
+            lines.push('💡 示例：盐胁迫下 F、P 叶片脯氨酸含量的变化有何不同？');
+            return { level: 1, ok: false, lines: lines };
+        }
+        if (!hasAny(t, ['盐'])) {
+            lines.push('✅ 问题与植物逆境响应相关。⚠️ 但本任务筛选的是耐盐水稻品种，实验的自变量是盐胁迫（当地土壤含盐量 2～5 g·kg⁻¹），干旱等其他逆境不在本实验范围内。');
+            lines.push('💡 请把问题聚焦到"盐胁迫"上，示例：盐胁迫对 F、P 水稻叶片净光合速率的影响是否存在差异？');
+            return { level: 1, ok: false, lines: lines };
+        }
+        if (!isQ) {
+            lines.push('✅ 问题与情境相关。⚠️ 但"研究……""了解……"是研究意向，不是问题——请改为疑问句，敢于对答案作出预测。');
+            lines.push('💡 示例：盐胁迫对 F、P 叶片净光合速率的影响是否存在差异？');
+            return { level: 1, ok: false, lines: lines };
+        }
+        if (specHit || compHit) {
+            lines.push('🌟 很好的问题！疑问句、变量关系明确、可通过控制变量实验直接检验——达到水平三。');
+            lines.push('💡 其他同学的问题示例：·盐胁迫对 F、P 叶片净光合速率的影响是否存在差异？·盐胁迫下两品种脯氨酸含量变化有何不同？·耐盐性强弱与细胞膜完整性有关吗？');
+            return { level: 3, ok: true, lines: lines };
+        }
+        lines.push('✅ 已是疑问句、指向研究情境，达到水平二。');
+        lines.push('⚠️ 还可以更聚焦：把"研究耐盐性"落到具体变量上（如"盐胁迫下两品种的××指标变化有何不同？"），问题就可直接检验了。');
+        return { level: 2, ok: false, lines: lines };
+    }
+
+    // 环节2：假设—预期（两组必填，两项齐全即水平三）
+    function evalStage2() {
+        const pairs = getPredictionPairs();
+        const valid = pairs.filter(p =>
+            p.ind && p.dir && hasAny(p.ind, PRED_INDICATORS) && hasAny(p.dir, DIR_WORDS));
+        const anyFilled = pairs.some(p => (p.ind && p.ind.length > 0) || (p.dir && p.dir.length > 0));
+        let lines = [];
+
+        stageState.prediction = { pairs: pairs, time: new Date().toLocaleString('zh-CN', { hour12: false }) };
+        saveState();
+        renderPredictionEcho();
+
+        if (!anyFilled) return { level: 0, ok: false, lines: ['❌ 未填写预期。'] };
+
+        if (valid.length >= 2) {
+            lines.push('🌟 两项"指标+方向"齐全，与假设匹配，达到水平三！');
+            if (valid.some(p => hasAny(p.ind, ['sod']))) {
+                lines.push('🔍 注意：你预测了 SOD——"更高"（清除能力强）或"更低"（损伤轻、无需大量诱导）在机理上都自洽，究竟哪个对？第(6)题的数据见分晓。');
+            }
+            lines.push('⏳ 记住你的预期——第(6)题作答时可对照表中数据检验。');
+            return { level: 3, ok: true, lines: lines };
+        }
+
+        lines.push('✅ 已写出 ' + valid.length + ' 项"指标+方向"的预期。');
+        for (let i = 1; i <= 2; i++) {
+            const ind = document.getElementById('p' + i + 'ind').value.trim();
+            const dir = document.getElementById('p' + i + 'dir').value.trim();
+            if ((ind || dir) && !(ind && dir && hasAny(ind, PRED_INDICATORS) && hasAny(dir, DIR_WORDS))) {
+                lines.push('⚠️ 第' + i + '项"' + (ind || '？') + ' 应 ' + (dir || '？') + '"未能自动识别——请用明确的生理指标（脯氨酸、气孔导度、叶片电导率、SOD活性、净光合速率、胞间CO₂浓度等）和变化方向（更高、增加、更低、减少、更大、上升、下降、升幅更小、基本不变等）表述。');
+            }
+        }
+        if (valid.length === 0) {
+            lines.push('❌ 预期不完整：每项都要写清"生理指标 + 变化方向"。');
+            lines.push('💡 示例：脯氨酸（指标）应 积累更多（方向）；叶片电导率（指标）应 上升幅度更小（方向）。');
+            return { level: 0, ok: false, lines: lines };
+        }
+        lines.push('⚠️ 水平一：题目要求至少两项——请补齐第二项，或按上方提示修改已填项的表述。');
+        return { level: 1, ok: false, lines: lines };
+    }
+
+    // 环节3·第(3)题：方案评价与完善
+    function evalQ3() {
+        let lines = [];
+        const t3 = document.getElementById('s3Input').value.trim();
+        if (!t3) return { level: 0, ok: false, lines: ['❌ (3) 未作答。'] };
+        const dMat = hasAny(t3, ['长势', '形态', '大小一致', '幼苗一致']);
+        const dCtrl = hasAny(t3, ['对照', '0 g', '0g', '基线']);
+        const dSep = hasAny(t3, ['同区域', '同一区域', '混栽', '混种', '相互', '干扰', '分区域', '分区种植', '分开种植']);
+        const dRep = hasAny(t3, ['重复', '1株', '一株', '1 株', '多株', '平均值', '偶然', '误差']);
+        const defects = [
+            { hit: dMat, name: '未选取形态大小、长势一致的水稻幼苗', fix: '应选取形态大小、长势一致的水稻' },
+            { hit: dCtrl, name: '未设 0 g·kg⁻¹ 对照组', fix: '增设 0 g·kg⁻¹ 对照组（每品种分 5 组：0、2、3、4、5 g·kg⁻¹）' },
+            { hit: dSep, name: '同一盐浓度下两品种同区域种植，相互干扰', fix: '同一盐浓度下两品种应分区域种植' },
+            { hit: dRep, name: '每组仅随机选取 1 株测定，偶然误差大', fix: '每组应随机选取多株测定求平均值' }
+        ];
+        const foundCount = defects.filter(d => d.hit).length;
+        if (foundCount === 0) {
+            lines.push('⚠️ (3) 未识别出方案缺陷。提示：从"取材一致性、对照组设置、两品种种植方式、每组建株数"四个角度逐句审查方案。');
+            return { level: 1, ok: false, lines: lines };
+        }
+        defects.forEach(d => { if (d.hit) lines.push('✅ 发现缺陷：' + d.name + '。'); });
+        defects.filter(d => !d.hit).forEach(d => lines.push('⚠️ 未发现：' + d.name + '（' + d.fix + '）。'));
+        if (foundCount >= 4) {
+            lines.push('🌟 全部 4 项缺陷均被发现——请确认每项都写出了对应修正，即达到水平三！');
+            return { level: 3, ok: true, lines: lines };
+        }
+        if (foundCount >= 2) {
+            lines.push('✅ 共发现 ' + foundCount + ' 项缺陷并修正，达到水平二。');
+            return { level: 2, ok: true, lines: lines };
+        }
+        lines.push('⚠️ 仅发现 ' + foundCount + ' 项缺陷，达到水平一。');
+        return { level: 1, ok: false, lines: lines };
+    }
+
+    // 环节3·第(4)题：仪器选择
+    function evalQ4() {
+        let lines = [];
+        const selected = getSelectedInstruments();
+        const t4 = document.getElementById('s4Input').value.trim();
+        if (selected.length === 0) {
+            return { level: 0, ok: false, lines: ['❌ (4) 未选择仪器，请至少选择 2 项。'] };
+        }
+        const matched = [];
+        for (const id of selected) {
+            const info = INSTRUMENT_INFO[id];
+            if (info && info.indicators.some(ind => hasAny(t4, [ind]))) matched.push(info.name);
+        }
+
+        // 仪器-指标搭配检测：每个分句只归属一台仪器时，检查"测+他家指标"
+        const ALIAS = { 1: ['分光光度计', '①'], 2: ['电导率仪', '②'], 3: ['光合仪', '③'], 4: ['试剂盒', '④'] };
+        const OWNED = {
+            1: ['脯氨酸', '叶绿素', '可溶性糖', '可溶性蛋白'],
+            2: ['电导率', '离子外渗'],
+            3: ['净光合', '气孔导度', '胞间co2'],
+            4: ['sod活性', '超氧化物歧化酶']
+        };
+        const NAME = { 1: '①分光光度计', 2: '②电导率仪', 3: '③便携式光合仪', 4: '④SOD活性检测试剂盒' };
+        const mismatches = [];
+        t4.split(/[；;。.\n]/).filter(c => c.trim()).forEach(cl => {
+            const n = normalizeText(cl);
+            const owners = selected.filter(id => ALIAS[id].some(a => n.includes(a)));
+            if (owners.length !== 1) return;
+            const owner = owners[0];
+            for (const id of [1, 2, 3, 4]) {
+                if (id === owner) continue;
+                const wrong = OWNED[id].filter(ind => n.includes(ind) && n.includes('测' + ind) && !OWNED[owner].includes(ind));
+                if (wrong.length) { mismatches.push({ owner: owner, wrong: wrong }); break; }
+            }
+        });
+        if (mismatches.length) {
+            mismatches.forEach(m => lines.push('❌ 搭配错误：' + NAME[m.owner] + '检测的是自身对应指标，不能测定' + m.wrong.join('、') + '。'));
+            lines.push('💡 正确搭配：①分光光度计→脯氨酸/叶绿素/可溶性糖等含量；②电导率仪→叶片电导率；③便携式光合仪→净光合速率/气孔导度/胞间CO₂浓度；④SOD活性检测试剂盒→SOD活性。请修正搭配后重新提交。');
+            return { level: 1, ok: false, lines: lines };
+        }
+        if (selected.length < 2) {
+            lines.push('⚠️ (4) 只选了 1 项仪器（题目要求至少 2 项），理由：' + (matched.length ? '已匹配指标' + matched.join('、') : '未见对应指标。'));
+            return { level: 1, ok: false, lines: lines };
+        }
+        if (matched.length < 2) {
+            lines.push('❌ (4) 已选 ' + selected.length + ' 项仪器，但只有 ' + matched.length + ' 项在理由中说清了检测指标。请为每项仪器写明"仪器→指标→与耐盐性的关系"。');
+            return { level: 0, ok: false, lines: lines };
+        }
+        const mechCount = countUnique(t4, MECH_WORDS), trendCount = countUnique(t4, TREND_WORDS);
+        const l4 = mechCount >= 2 ? 3 : (mechCount >= 1 || trendCount >= 2) ? 2 : 1;
+        lines.push('✅ (4) 仪器与指标匹配正确：' + matched.join('、') + '；理由达水平' + l4 + (mechCount >= 2 ? '（机制层面阐述）' : trendCount >= 2 ? '（有变化趋势）' : '（较笼统）') + '。');
+        if (mechCount < 2) lines.push('   💡 提升建议：说明指标变化背后的生理意义（如"脯氨酸积累有助于维持渗透平衡""电导率升高反映膜损伤加重"）。');
+        return { level: l4, ok: l4 >= 2, lines: lines };
+    }
+
+    // 环节4：记录表搭建（实验组齐全方可达水平一）
+    function evalStage4() {
+        const varieties = getSelectedVarieties();
+        const indicators = getSelectedIndicators();
+        const concentrations = getSelectedConcentrations();
+        const indCount = indicators.length;
+        const hasReplicate = document.getElementById('chkReplicate').checked;
+        const hasAverage = document.getElementById('chkAverage').checked;
+        const hasBoth = varieties.includes('F') && varieties.includes('P');
+        const hasCtrl = hasControlGroup(concentrations);
+        const allExp = isAllExperimentConcsSelected(concentrations);
+
+        const detail = '品种: ' + varieties.join('、') + ' ｜ 指标: ' + indCount + ' 项 ｜ 对照组: ' + (hasCtrl ? '✅' : '❌') +
+            ' ｜ 实验组(2-5): ' + (allExp ? '✅齐全' : '❌不齐全') + ' ｜ 重复: ' + (hasReplicate ? '✅' : '❌') + ' ｜ 平均值: ' + (hasAverage ? '✅' : '❌');
+        let lines = [];
+
+        if (!hasBoth || concentrations.length === 0 || !allExp || indCount < 2) {
+            const reason = [];
+            if (!hasBoth) reason.push('品种不完整（需同时勾选 F 和 P）');
+            if (concentrations.length === 0) reason.push('缺盐浓度');
+            if (!allExp) reason.push('实验组分组不齐全（水平一即要求实验组 2、3、4、5 全部勾选）');
+            if (indCount < 2) reason.push('检测指标不足 2 项');
+            lines.push('❌ 表格设计尚未达标：' + reason.join('、') + '。');
+            lines.push('📊 ' + detail);
+            return { level: 0, ok: false, lines: lines };
+        }
+        if (hasCtrl && hasReplicate && hasAverage) {
+            lines.push('🎉 表格包含品种（F、P）、盐浓度；实验组(2、3、4、5)与对照组(0)分组齐全；指标≥2 项；且设置了重复和平均值，实验设计科学规范，达到水平三。');
+            lines.push('📊 ' + detail);
+            return { level: 3, ok: true, lines: lines };
+        }
+        if (hasCtrl) {
+            lines.push('✅ 达到水平二：品种、盐浓度齐全，实验组与对照组分组齐全。');
+            lines.push('⚠️ 建议同时勾选"设置重复"和"计算平均值"（两者须同时具备），使数据更可靠，冲击水平三。');
+            lines.push('📊 ' + detail);
+            return { level: 2, ok: true, lines: lines };
+        }
+        lines.push('✅ 达到水平一：品种完整、实验组(2、3、4、5)齐全、指标≥2 项。');
+        lines.push('⚠️ 缺少对照组(0 g·kg⁻¹)，增设后达到水平二。');
+        lines.push('📊 ' + detail);
+        return { level: 1, ok: false, lines: lines };
+    }
+
+    // 环节5：分析数据、得出结论
+    function evalStage5() {
+        const t = document.getElementById('s6Input').value.trim();
+        let lines = [];
+        let lvl = 0;
+        if (!t) {
+            lines.push('❌ (6) 未作答。');
+        } else {
+            const pHit = hasAny(t, ['p品种', '品种p', '选择p', '选p', '应选p', '种植p', 'p更耐盐', 'p耐盐', 'p更适', '适合p', 'p优于', 'p更好']);
+            const fHit = hasAny(t, ['选择f', '选f', '应选f', 'f更适', 'f更耐盐', 'f优于', 'f更好', 'f比p']);
+            const chooseP = pHit && !fHit;
+            const indCount = countUnique(t, INDICATOR_WORDS);
+            const trendCount = countUnique(t, TREND_WORDS);
+            const mechCount = countUnique(t, MECH_WORDS);
+            const sodInsight = hasAny(t, ['sod']) && hasAny(t, ['膜损伤', '活性氧', '抗氧化', '电导率']);
+            if (!chooseP) {
+                lines.push('❌ (6) 结论应为选择 P 品种：盐胁迫下 P 叶片电导率仅 40.80→135.00（F 为 90.20→320.30），膜损伤更轻；脯氨酸积累更多（21.20）；气孔导度保持更好（0.84）；净光合速率不降反升（1.03）。');
+            } else {
+                lines.push('✅ (6) 结论正确：选择 P 品种。');
+                if (indCount === 0) {
+                    lvl = 0;
+                    lines.push('❌ 仅有结论、未结合任何生理指标分析。请至少说出 1～2 项指标及简单理由（如叶片电导率、脯氨酸含量相对 F 的变化），才能达到水平一。');
+                } else if (indCount < 2 || trendCount < 1) {
+                    lvl = 1;
+                    lines.push('⚠️ 水平一：请结合表中指标进行比较（如电导率、脯氨酸、气孔导度相对 F 的变化方向），再下结论。');
+                } else if (indCount >= 3 && mechCount >= 1) {
+                    if (sodInsight) {
+                        lvl = 3;
+                        lines.push('🌟 你解释了"SOD 活性低反而是好事"这一反直觉现象（同一盐度下 P 显著低于 F，5 g·kg⁻¹ 时 323.50 vs 390.20——P 电导率低→膜损伤轻→活性氧少→SOD 无需大量诱导），形成完整因果网络，达到水平三！');
+                    } else {
+                        lvl = 2;
+                        lines.push('✅ 已进行多指标数据对比并联系生理机制，达到水平二。');
+                        lines.push('💡 冲击水平三：试解释反直觉现象——直觉上"SOD 越高越耐盐"，但同一盐度下 F 显著高于 P（5 g·kg⁻¹：390.20 vs 323.50），F 恰是活性氧爆发、被动防御的一方；P 的 SOD 低而稳，说明膜损伤轻、活性氧少。"SOD 活性低"反而是耐受的表现。');
+                    }
+                } else {
+                    lvl = 1;
+                    lines.push('⚠️ 水平一~二之间：建议使用≥3 项指标，并将指标变化与膜完整性、渗透调节、光合能力等机制建立因果联系。');
+                }
+            }
+        }
+        lines.push('🔍 预期之外的发现：P 的气孔导度（0.84）、胞间CO₂（0.87）都降了，净光合速率却不降反升（1.03）——综合分析时可留意这一反常点。');
+        return { level: lvl, ok: lvl >= 2, lines: lines };
+    }
+
+    // 环节6：进一步探究（选做，诊断问题→机理选策→实验检验）
+    function evalStage6() {
+        const t = document.getElementById('s7Input').value.trim();
+        if (!t) return { level: 0, ok: false, lines: ['❌ 未作答（本环节为选做）。'] };
+        let lines = [];
+        const techCount = countUnique(t, ['有机肥', '秸秆', '生物碳', '菌剂', '微生物']);
+        const diagHit = hasAny(t, ['蒸发', '毛细管', '返盐', '盐分', '毒害', '钠', '干旱', '缺水', '贫瘠', '板结', '降水']);
+        const mechHit = hasAny(t, ['机理', '图5-3', '吸附', '阻断', '孔隙', '定殖', '分解', '缓冲', '淋洗', '对症', '因为']);
+        const hasQ = hasAny(t, ['提出问题', '探究的问题', '哪种', '哪一个', '能否', '是否', '会不会']);
+        const hasHypo = hasAny(t, ['假设']);
+        const hasVar = hasAny(t, ['自变量', '因变量']);
+        const hasCtrl = hasAny(t, ['对照', '重复', '平均', '梯度', '分组']);
+        const hasPredict = hasAny(t, ['预期', '若', '则', '如果', '预测']);
+        const dataLink = countUnique(t, INDICATOR_WORDS) >= 1 || hasAny(t, ['表5-1', '产量', '图5-3']);
+        if (techCount === 0) {
+            lines.push('⚠️ 请先指明你选择探究的农业技术（有机肥施用 / 秸秆覆盖 / 生物碳改良 / 微生物菌剂——单项、多项比较或组合均可）。');
+            return { level: 1, ok: false, lines: lines };
+        }
+        lines.push('✅ 已选定探究的农业技术。');
+        const essentials = (hasQ ? 1 : 0) + (hasHypo ? 1 : 0) + (hasVar ? 1 : 0) + (hasCtrl ? 1 : 0) + (hasPredict ? 1 : 0);
+        if (essentials >= 5 && diagHit && mechHit && dataLink) {
+            lines.push('🌟 三步齐备：诊断环境问题 → 依据图5-3 机理选策 → 完整实验设计（问题、假设、变量、对照、预期），且预期落到具体指标——达到水平三！');
+            return { level: 3, ok: true, lines: lines };
+        }
+        if (essentials >= 3 && (diagHit || mechHit)) {
+            const miss = [];
+            if (!diagHit) miss.push('先诊断当地制约水稻生长的环境问题（强蒸发返盐、Na⁺ 毒害、干旱贫瘠等）');
+            if (!mechHit) miss.push('依据图5-3 机理说明所选技术的对症理由');
+            if (!hasVar) miss.push('写明自变量与因变量');
+            if (!hasCtrl) miss.push('设置"不施用/常规管理"对照');
+            if (!hasPredict) miss.push('写出预期结果');
+            lines.push('✅ 已具备主要探究环节，达到水平二。💡 补齐后冲击水平三：' + miss.join('；') + '。');
+            return { level: 2, ok: true, lines: lines };
+        }
+        lines.push('⚠️ 请按题干三步作答：①诊断当地制约水稻生长的主要环境问题；②结合图5-3 机理思考应对策略；③按探究基本思路设计完整实验（问题→假设→方案（自变量、对照、重复）→预期）。');
+        return { level: 1, ok: false, lines: lines };
+    }
+
+    // ================= UI 交互 =================
+
+    function getSelectedInstruments() {
+        const sel = [];
+        document.querySelectorAll('#instrumentGrid input[type="checkbox"]').forEach(cb => { if (cb.checked) sel.push(parseInt(cb.value)); });
+        return sel;
+    }
+
+    // ---- (4)仪器选择 → (5)指标推荐联动 ----
+    const INSTRUMENT_INDICATOR_MAP = {
+        1: ['脯氨酸含量', '叶绿素含量', '可溶性糖含量'],
+        2: ['叶片电导率'],
+        3: ['净光合速率', '气孔导度', '胞间CO₂浓度'],
+        4: ['SOD活性']
+    };
+    function updateRecommendedIndicators() {
+        const recSet = new Set();
+        getSelectedInstruments().forEach(id => {
+            (INSTRUMENT_INDICATOR_MAP[id] || []).forEach(ind => recSet.add(ind));
+        });
+        document.querySelectorAll('#indicatorGrid .indicator-check').forEach(label => {
+            const isRec = recSet.has(label.dataset.value);
+            label.classList.toggle('recommended', isRec);
+            const tag = label.querySelector('.rec-tag');
+            if (isRec && !tag) {
+                const t = document.createElement('span');
+                t.className = 'rec-tag';
+                t.textContent = '✦ 可测';
+                label.appendChild(t);
+            } else if (!isRec && tag) {
+                tag.remove();
+            }
+        });
+        const hint = document.getElementById('indicatorHint');
+        if (hint) hint.style.display = recSet.size ? 'block' : 'none';
+    }
+
+    function setupChips() {
+        document.querySelectorAll('.instrument-item').forEach(item => {
+            const cb = item.querySelector('input[type="checkbox"]');
+            item.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT') return;
+                cb.checked = !cb.checked;
+                item.classList.toggle('selected', cb.checked);
+                updateRecommendedIndicators();
+            });
+            cb.addEventListener('change', function() { item.classList.toggle('selected', this.checked); updateRecommendedIndicators(); });
+        });
+        updateRecommendedIndicators();
+    }
+
+    // ---- 记录表实时预览 ----
+    function updatePreview() {
+        const varieties = getSelectedVarieties();
+        const indicators = getSelectedIndicators();
+        const concentrations = getSelectedConcentrations();
+        const hasReplicate = document.getElementById('chkReplicate').checked;
+        const hasAverage = document.getElementById('chkAverage').checked;
+
+        document.getElementById('varietyDisplay').textContent = varieties.length ? varieties.join('、') : '无';
+        document.getElementById('indicatorCountDisplay').textContent = indicators.length;
+        document.getElementById('concentrationCountDisplay').textContent = concentrations.length;
+        document.getElementById('replicateDisplay').textContent = hasReplicate ? '有 (3个)' : '无';
+        document.getElementById('averageDisplay').textContent = hasAverage ? '有' : '无';
+
+        const subCount = (hasReplicate ? 3 : 0) + (hasAverage ? 1 : 0);
+        let headerHTML;
+        if (subCount === 0 || indicators.length === 0) {
+            headerHTML = '<tr><th>品种</th><th>盐浓度<br>(g·kg⁻¹)</th><th>组别</th>';
+            indicators.forEach(ind => { headerHTML += '<th>' + ind + '</th>'; });
+            headerHTML += '</tr>';
+        } else {
+            headerHTML = '<tr><th rowspan="2">品种</th><th rowspan="2">盐浓度<br>(g·kg⁻¹)</th><th rowspan="2">组别</th>';
+            indicators.forEach(ind => { headerHTML += '<th colspan="' + subCount + '">' + ind + '</th>'; });
+            headerHTML += '</tr><tr>';
+            indicators.forEach(() => {
+                if (hasReplicate) headerHTML += '<th>①</th><th>②</th><th>③</th>';
+                if (hasAverage) headerHTML += '<th>平均</th>';
+            });
+            headerHTML += '</tr>';
+        }
+        document.getElementById('previewHead').innerHTML = headerHTML;
+
+        let bodyHTML = '';
+        varieties.forEach(v => {
+            concentrations.forEach(c => {
+                const isControl = (c === 0);
+                bodyHTML += '<tr><td class="row-label">' + v + '</td><td>' + c + '</td>' +
+                    '<td><span class="group-tag ' + (isControl ? 'control' : 'experiment') + '">' + (isControl ? '对照组' : '实验组') + '</span></td>';
+                indicators.forEach(() => {
+                    if (subCount === 0) { bodyHTML += '<td class="empty-cell">—</td>'; return; }
+                    if (hasReplicate) bodyHTML += '<td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td>';
+                    if (hasAverage) bodyHTML += '<td class="empty-cell">—</td>';
+                });
+                bodyHTML += '</tr>';
+            });
+        });
+        document.getElementById('previewBody').innerHTML = bodyHTML ||
+            '<tr><td colspan="10" style="padding:20px;color:#b0b8a8;">请至少选择一个品种和一个浓度</td></tr>';
+    }
+
+    function setupBuilder() {
+        [['#varietyGrid', '.variety-check'], ['#indicatorGrid', '.indicator-check'], ['#concentrationGrid', '.concentration-check']].forEach(pair => {
+            document.querySelectorAll(pair[0] + ' ' + pair[1]).forEach(label => {
+                const cb = label.querySelector('input[type="checkbox"]');
+                label.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'INPUT') return;
+                    cb.checked = !cb.checked;
+                    label.classList.toggle('selected', cb.checked);
+                    updatePreview();
+                });
+                cb.addEventListener('change', function() {
+                    label.classList.toggle('selected', this.checked);
+                    updatePreview();
+                });
+            });
+        });
+        document.getElementById('chkReplicate').addEventListener('change', updatePreview);
+        document.getElementById('chkAverage').addEventListener('change', updatePreview);
+        updatePreview();
+    }
+
+    const EVALUATORS = {
+        1: evalStage1, 2: evalStage2,
+        4: evalStage4, 5: evalStage5, 6: evalStage6
+    };
+    const STAGE_NAMES = {
+        1: '①提出问题', 2: '②作出假设', 3: '③设计方案', 4: '④实施方案·获取数据', 5: '⑤分析数据·得出结论', 6: '⑥进一步探究(选做)'
+    };
+
+    function handleSubmit(stageNo, part) {
+        let result, fb, recordName, textSummary;
+        if (stageNo === 3 && part) {
+            if (part === 'q3') {
+                result = evalQ3();
+                recordName = '③设计方案·(3)评价与完善';
+                textSummary = document.getElementById('s3Input').value.trim();
+            } else {
+                result = evalQ4();
+                recordName = '③设计方案·(4)仪器选择';
+                textSummary = '仪器:' + getSelectedInstruments().join(',') + ' ｜ ' + document.getElementById('s4Input').value.trim();
+            }
+            fb = document.getElementById('fb-3-' + part);
+            stageState['3' + part] = { level: result.level, ok: result.ok };
+            const a = stageState['3q3'], b = stageState['3q4'];
+            stageState[3] = {
+                level: Math.round(((a ? a.level : 0) + (b ? b.level : 0)) / 2),
+                ok: !!(a && b && a.ok && b.ok),
+                pending: !(a && b)
+            };
+        } else {
+            result = EVALUATORS[stageNo]();
+            fb = document.getElementById('fb-' + stageNo);
+            stageState[stageNo] = { level: result.level, ok: result.ok };
+            recordName = STAGE_NAMES[stageNo];
+            if (stageNo === 2) {
+                textSummary = getPredictionPairs().map(p => (p.ind || '？') + '应' + (p.dir || '？')).join('；');
+            } else if (stageNo === 4) {
+                const vs = getSelectedVarieties(), inds = getSelectedIndicators(), cs = getSelectedConcentrations();
+                textSummary = '品种:' + (vs.length ? vs.join('') : '无') + ' | 指标:' + (inds.length ? inds.join('、') : '无') +
+                    ' | 浓度:' + (cs.length ? cs.join(',') : '无') +
+                    ' | 重复:' + (document.getElementById('chkReplicate').checked ? '有' : '无') +
+                    ' | 平均:' + (document.getElementById('chkAverage').checked ? '有' : '无');
+            } else {
+                textSummary = collectStageText(stageNo);
+            }
+        }
+        const linesHtml = result.lines.map(l => {
+            const cls = (l.startsWith('✅') || l.startsWith('🌟') || l.startsWith('🎉')) ? 'ok-line' : (l.startsWith('❌') ? 'bad-line' : 'fb-line');
+            return '<div class="' + cls + '">' + l.replace(/</g, '&lt;') + '</div>';
+        }).join('');
+        const lvText = result.level === 3 ? '水平3（优秀 · 达标）' : result.level === 2 ? '水平2（达标）' : result.level === 1 ? '水平1（待改进）' : '水平0（未达标）';
+        const banner = '<div class="level-banner lv' + result.level + '">🏆 本次作答评价：' + lvText + '</div>';
+        fb.innerHTML = banner + linesHtml;
+        fb.classList.add('show');
+
+        saveState();
+        updateStageStatus(stageNo);
+        addRecord(recordName + '（水平' + result.level + '）', textSummary || '（作答）', result.level);
+        renderHistory();
+        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function collectStageText(stageNo) {
+        const ids = { 1: ['s1Input'], 5: ['s6Input'], 6: ['s7Input'] };
+        const list = ids[stageNo] || [];
+        return list.map(id => document.getElementById(id).value.trim()).filter(Boolean).join(' ｜ ');
+    }
+
+    function updateStageStatus(stageNo) {
+        const st = stageState[stageNo];
+        const el = document.getElementById('st-status-' + stageNo);
+        const step = document.querySelector('.step-item[data-step="' + stageNo + '"]');
+        if (!st) { el.textContent = '未完成'; el.className = 'stage-status todo'; step.classList.remove('done'); return; }
+        if (st.pending) {
+            const done = ['3q3', '3q4'].filter(k => stageState[k]).length;
+            el.textContent = '已提交 ' + done + '/2'; el.className = 'stage-status part'; step.classList.add('done'); return;
+        }
+        if (st.ok) { el.textContent = '✓ 水平' + st.level; el.className = 'stage-status ok'; step.classList.add('done'); }
+        else { el.textContent = '水平' + st.level + ' · 待改进'; el.className = 'stage-status part'; step.classList.add('done'); }
+    }
+
+    // ================= 整体评价 =================
+    function renderOverall() {
+        const grid = document.getElementById('overallGrid');
+        const summary = document.getElementById('overallSummary');
+        document.getElementById('overallResult').classList.add('show');
+        let okCount = 0, partCount = 0, todoCount = 0, l3Count = 0;
+        let chipsHtml = '';
+        for (let i = 1; i <= 6; i++) {
+            const st = stageState[i];
+            const name = STAGE_NAMES[i];
+            if (!st) { chipsHtml += '<span class="ov-chip">' + name + ' · 未完成</span>'; todoCount++; }
+            else if (st.pending) { chipsHtml += '<span class="ov-chip part">' + name + ' · 已提交' + (['3q3', '3q4'].filter(k => stageState[k]).length) + '/2</span>'; partCount++; }
+            else if (st.ok) { chipsHtml += '<span class="ov-chip ' + (st.level >= 3 ? 'l3' : 'ok') + '">' + name + ' · ✓水平' + st.level + '</span>'; okCount++; if (st.level >= 3) l3Count++; }
+            else { chipsHtml += '<span class="ov-chip part">' + name + ' · 水平' + st.level + '</span>'; partCount++; }
+        }
+        grid.innerHTML = chipsHtml;
+
+        let advice = '';
+        const required = 5, optionalIdx = 6;
+        if (todoCount === 6) advice = '你还没有提交任何环节，建议从"①提出问题"开始，按科学探究的链条逐环节完成。';
+        else if (partCount === 0 && todoCount === 0) advice = '🎉 全部环节已提交！其中 ' + l3Count + ' 个环节达到水平三。你已经完整经历了一次"提出问题→作出假设→设计方案→获取数据→得出结论"的科学探究过程，并回验了自己的假设。';
+        else advice = '已完成 ' + (okCount + partCount) + '/6 个环节（通过 ' + okCount + ' 个，待改进 ' + partCount + ' 个，未完成 ' + todoCount + ' 个）。\n改进建议：优先补齐未完成的必做环节（①~⑤）；对"待改进"环节，查看反馈中的 ⚠️ 提示并修改后重新提交。';
+        if (!stageState[6]) advice += '\n提示：⑥进一步探究为选做（设计适合在该区域推广的农业技术探究实验），完成后可获得更高水平认定。';
+        summary.textContent = advice;
+        addRecord('整体评价', okCount + '通过 / ' + partCount + '待改进 / ' + todoCount + '未完成', okCount >= 5 ? 3 : okCount >= 3 ? 2 : okCount >= 1 ? 1 : 0);
+        renderHistory();
+    }
+
+    // ================= 历史记录 =================
+    function getHistory() {
+        try { const d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : []; } catch (e) { return []; }
+    }
+    function addRecord(stage, text, level) {
+        const records = getHistory();
+        records.push({ time: new Date().toLocaleString('zh-CN', { hour12: false }), stage: stage, text: text, level: level, id: Date.now() + Math.random() });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    }
+    function renderHistory() {
+        const records = getHistory();
+        const list = document.getElementById('historyList');
+        document.getElementById('historyCount').textContent = records.length + ' 条';
+        if (records.length === 0) { list.innerHTML = '<div class="history-empty">🌱 暂无提交记录，开始作答吧！</div>'; return; }
+        const levelNames = ['水平0', '水平1', '水平2', '水平3'];
+        const levelCls = ['l0', 'l1', 'l2', 'l3'];
+        let html = '';
+        [...records].reverse().forEach(r => {
+            const preview = r.text.length > 70 ? r.text.slice(0, 70) + '…' : r.text;
+            const safe = s => s.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            html += '<div class="history-item"><div class="h-level ' + (levelCls[r.level] || 'l0') + '">' + (levelNames[r.level] || '水平0') + '</div>' +
+                '<div class="h-body"><div class="h-text history-text" id="htext_' + r.id + '">' + safe(preview) + '</div>' +
+                '<div class="h-meta"><span class="stage-tag-sm">' + safe(r.stage) + '</span><span>🕒 ' + r.time + '</span>' +
+                '<button class="toggle-text" data-id="' + r.id + '">展开全文</button></div></div></div>';
+        });
+        list.innerHTML = html;
+        document.querySelectorAll('.toggle-text').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const el = document.getElementById('htext_' + id);
+                const record = getHistory().find(r => String(r.id) === String(id));
+                if (!record) return;
+                if (el.classList.contains('expand')) {
+                    el.classList.remove('expand');
+                    el.textContent = record.text.length > 70 ? record.text.slice(0, 70) + '…' : record.text;
+                    this.textContent = '展开全文';
+                } else {
+                    el.classList.add('expand');
+                    el.textContent = record.text;
+                    this.textContent = '收起';
+                }
+            });
+        });
+    }
+
+    // ================= 初始化 =================
+    function updateWordCounts() {
+        const map = { 's1Input': 'wc-s1', 's3Input': 'wc-s3', 's4Input': 'wc-s4', 's6Input': 'wc-s6', 's7Input': 'wc-s7' };
+        Object.keys(map).forEach(id => {
+            const ta = document.getElementById(id);
+            const wc = document.getElementById(map[id]);
+            if (ta && wc) wc.textContent = ta.value.length + ' 字';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setupChips();
+        setupBuilder();
+        document.querySelectorAll('[data-submit]').forEach(btn => {
+            btn.addEventListener('click', function() { handleSubmit(parseInt(this.dataset.submit), this.dataset.part); });
+        });
+        document.getElementById('overallBtn').addEventListener('click', renderOverall);
+        document.querySelectorAll('textarea.ta').forEach(ta => ta.addEventListener('input', updateWordCounts));
+        updateWordCounts();
+
+        document.getElementById('expandAllBtn').addEventListener('click', function() {
+            document.getElementById('historyListWrap').style.display = 'block';
+            document.querySelector('.history-area').scrollIntoView({ behavior: 'smooth' });
+        });
+        document.getElementById('collapseAllBtn').addEventListener('click', function() {
+            document.getElementById('historyListWrap').style.display = 'none';
+        });
+        document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+            if (getHistory().length === 0 && Object.keys(stageState).length === 0) { alert('📭 暂无记录。'); return; }
+            if (confirm('🧹 确定清空全部提交历史与各环节状态（含第(2)题预测）吗？此操作不可撤销！')) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STATE_KEY);
+                Object.keys(stageState).forEach(k => delete stageState[k]);
+                for (let i = 1; i <= 6; i++) updateStageStatus(i);
+                document.querySelectorAll('.stage-feedback').forEach(fb => { fb.classList.remove('show'); fb.innerHTML = ''; });
+                document.getElementById('overallResult').classList.remove('show');
+                renderPredictionEcho();
+                renderHistory();
+            }
+        });
+
+        for (let i = 1; i <= 6; i++) updateStageStatus(i);
+        const savedPred = stageState.prediction;
+        if (savedPred && savedPred.pairs) {
+            savedPred.pairs.forEach(function(p, idx) {
+                if (idx > 2) return;
+                const indEl = document.getElementById('p' + (idx + 1) + 'ind');
+                const dirEl = document.getElementById('p' + (idx + 1) + 'dir');
+                if (indEl && p.ind) indEl.value = p.ind;
+                if (dirEl && p.dir) dirEl.value = p.dir;
+            });
+        }
+        renderPredictionEcho();
+        renderHistory();
+    });
+})();
+</script>
+
+</body>
+</html>
