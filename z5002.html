@@ -830,7 +830,7 @@
         const t = document.getElementById('s1Input').value.trim();
         let lines = [];
         if (!t) return { level: 0, ok: false, lines: ['❌ 未作答。'] };
-        const isQ = /[?？]/.test(t) || hasAny(t, ['是否', '吗', '为什么', '如何', '会不会', '有没有', '哪种', '哪个', '谁']);
+        const isQ = /[?？]/.test(t) || hasAny(t, ['是否', '吗', '如何', '怎样', '会不会', '有没有', '哪', '什么', '谁']);
         const varHit = hasAny(t, ['盐', '浓度', '胁迫', '品种', 'f', 'p', '脯氨酸', '电导率', '光合', '气孔', 'sod', '胞间', '耐盐', 'co2', '叶绿素', '糖']);
         const specHit = hasAny(t, ['净光合', '脯氨酸', '电导率', '气孔', 'sod', '胞间', '叶绿素', '可溶性糖', '膜', '耐盐']);
         const compHit = hasAny(t, ['差异', '不同', '区别', '相比', '影响', '变化']);
@@ -1077,7 +1077,6 @@
                 }
             }
         }
-        lines.push('🔍 预期之外的发现：P 的气孔导度（0.84）、胞间CO₂（0.87）都降了，净光合速率却不降反升（1.03）——综合分析时可留意这一反常点。');
         return { level: lvl, ok: lvl >= 2, lines: lines };
     }
 
