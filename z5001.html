@@ -546,16 +546,16 @@
                 <div class="sub">水稻的改良 · 作业评价系统</div>
             </div>
         </div>
-        <div class="header-badge">📖 第5课时</div>
+        <div class="header-badge">📖 第5课时 Z5001</div>
     </div>
 
     <div class="question-area">
         <div class="q-label">
-            <span>📝 Z5001 (5)</span>
-            <span class="tag">综合决策</span>
+            <span>📝 Z5001 (3)</span>
+            <span class="tag">科学论证</span>
         </div>
         <div class="q-text">
-            科研团队拟在塔克拉玛干沙漠边缘推广种植 CBP 水稻，并采用膜下滴灌技术。请依据图5-1（CBP水稻昼夜碳代谢机制）、图5-2（膜下滴灌原理）及所学知识，综合决策该种植方案在"双碳"目标背景下的可行性，并说明理由。
+            研究人员在CBP水稻的基础上进一步敲除了控制气孔关闭的关键基因OsSLAC1，构建了ΔCBP水稻，ΔCBP水稻白天的气孔导度比CBP水稻更大。请结合图5-1（CBP水稻碳代谢过程）及所学知识，论证ΔCBP水稻是否适合在塔克拉玛干沙漠边缘种植，并说明理由。
         </div>
     </div>
 
@@ -564,7 +564,7 @@
             <label for="answerInput"><span>✍️ 你的答案</span></label>
             <span class="word-count" id="wordCount">0 字</span>
         </div>
-        <textarea id="answerInput" placeholder="请在此输入你的综合决策分析……"></textarea>
+        <textarea id="answerInput" placeholder="请在此输入你的论证分析（先亮论点，再给论据）……"></textarea>
         <div class="btn-row">
             <button class="btn btn-primary" id="submitBtn">📤 提交答案</button>
             <button class="btn btn-outline" id="clearBtn">🗑️ 清空输入</button>
@@ -593,7 +593,7 @@
         </div>
 
         <div class="score-detail" id="scoreDetail">
-            <span><span class="dot green"></span> 水平1 基础</span>
+            <span><span class="dot gray"></span> 水平1 基础</span>
             <span><span class="dot yellow"></span> 水平2 进阶</span>
             <span><span class="dot green"></span> 水平3 卓越</span>
             <span style="margin-left:auto;font-size:13px;color:#6a8a58;" id="detailHint">维度检测</span>
@@ -625,53 +625,32 @@
     // ================================================================
     //  1. 关键词库
     // ================================================================
+    //  1. 关键词库（Z5001(3) ΔCBP论证题 · 2026-09定稿口径）
+    //     基准论点="不适合"；判断"适合"封顶水平1；科学性错误封顶水平1
+    // ================================================================
 
     const KW = {
-        // A 可行（明确）
-        A_feasible: ['可行', '可以', '能够', '能行'],
+        // 论点判断——否定（不适合）
+        Jneg: ['不适合', '不适宜', '不宜', '不可行', '不建议', '不应', '不能种植', '无法种植', '难以种植', '难以成活', '难以存活', '无法生存', '弊大于利', '得不偿失', '不值得', '不可取'],
 
-        // 用于水平2/3的A隐含检测（灌溉+协同）
-        A_implicit_irri: ['滴灌', '膜下滴灌', '节水灌溉', '灌溉要求', '灌溉需求', '对灌溉要求更高', '配合膜下滴灌'],
-        A_implicit_synergy: ['协同', '互补', '配合', '相辅相成', '相互', '共同'],
+        // D 失水矛盾主线（气孔→失水→环境缺水）
+        D_loss: ['蒸腾', '失水', '水分散失', '散失', '耗水', '水分流失'],
+        D_env: ['沙漠', '干旱', '缺水', '水资源', '亏缺', '萎蔫', '水源', '干燥', '降水'],
 
-        // B: CAM代谢
-        B: [
-            ['cam', '景天酸', '景天酸代谢'],
-            ['pepc', '磷酸烯醇式丙酮酸羧化酶', 'pep羧化酶'],
-            ['苹果酸', 'malate'],
-            ['脱羧', '释放co₂', '分解产生co₂'],
-            ['卡尔文循环', 'c₃途径', '碳反应', '暗反应']
-        ],
+        // W 兼顾权衡（优势面之外的转折/限制）
+        W_tradeoff: ['但', '但是', '然而', '不过', '虽然', '同时', '与此同时', '限制因子', '代价', '权衡', '矛盾', '无法弥补', '难以弥补', '不能弥补', '弊大于利', '得不偿失'],
 
-        // C: 光呼吸抑制
-        C: [
-            ['光呼吸'],
-            ['rubisco', 'rubp羧化酶', 'r酶'],
-            ['o₂', '氧气'],
-            ['抑制', '竞争'],
-            ['净固碳', '净光合']
-        ],
+        // C 层级因果链（基因层 + 定量比较）
+        C_gene: ['敲除', '基因', 'osslac1', 'slac', '突变', '功能缺陷', '关闭功能'],
+        C_compare: ['同步', '固碳增量', '失水增量', '水分利用效率', '入不敷出', '得不偿失', '弊大于利'],
 
-        // D: 气孔失水矛盾
-        D: [
-            ['气孔导度', '气孔开度', '气孔开放', '气孔张开'],
-            ['蒸腾', '水分散失', '失水', '耗水']
-        ],
+        // E 时空分离本质
+        E_term: ['时空分离', '昼闭夜开', '节水优势'],
+        E_loss: ['丧失', '破坏', '失去', '打破', '削弱'],
+        E_value: ['节水', '减少蒸腾', '优势', '适应', '分离'],
 
-        // E: 滴灌原理（水平1仅提及；水平2/3需展开）
-        E_mention: ['滴灌', '膜下滴灌', '节水灌溉', '灌溉', '补水'],
-        E_detail: [
-            ['地膜', '覆膜', '塑料薄膜'],
-            ['蒸发', '保水', '保墒'],
-            ['根区', '根系'],
-            ['盐分', '淋洗', '下移', '迁移']
-        ],
-
-        // F: 协同双碳
-        F: [
-            ['协同', '互补', '配合', '相辅相成'],
-            ['双碳', '碳中和', '碳达峰', '碳目标', '碳汇']
-        ]
+        // T 适应与权衡总括
+        T: ['适应', '匹配', '因地制宜']
     };
 
     // ================================================================
@@ -679,8 +658,12 @@
     // ================================================================
 
     function normalizeText(text) {
-        return text.replace(/CO₂/g, 'co2').replace(/CO2/g, 'co2').replace(/二氧化碳/g, 'co2')
-            .toLowerCase().replace(/[，,、。.；;：:！!？?""''（）()\s]+/g, ' ').trim();
+        return (text || '')
+            .replace(/CO₂/gi, 'co2').replace(/CO2/gi, 'co2').replace(/二氧化碳/g, 'co2')
+            .toLowerCase()
+            .replace(/₂/g, '2').replace(/₃/g, '3')
+            .replace(/[，,、。.；;：:！!？?\u201c\u201d\u2018\u2019（）()\s]+/g, ' ')
+            .trim();
     }
 
     function hasAny(text, keywords) {
@@ -688,112 +671,135 @@
         return keywords.some(kw => n.includes(kw.toLowerCase()));
     }
 
-    // ----- 维度A -----
-    // 明确可行
-    function hasFeasible(text) {
-        return hasAny(text, KW.A_feasible);
+    function hasRe(text, re) {
+        return re.test(normalizeText(text));
     }
 
-    // 隐含可行（灌溉+协同）
-    function hasImplicitA(text) {
-        return hasAny(text, KW.A_implicit_irri) && hasAny(text, KW.A_implicit_synergy);
+    // ----- 论点判断 -----
+    // 明确判断"不适合"
+    function detectJneg(text) {
+        return hasAny(text, KW.Jneg);
     }
 
-    // ----- 维度B -----
-    function detectB(text) {
-        for (const group of KW.B) {
-            if (hasAny(text, group)) return true;
+    // 判断"适合"（任一肯定表述前无"不、难"等否定）
+    function detectJpos(text) {
+        const n = normalizeText(text);
+        for (const term of ['适合', '可行', '适宜', '建议种植', '应该种植', '应当种植', '可以种植', '值得推广', '值得种植']) {
+            let idx = n.indexOf(term);
+            while (idx !== -1) {
+                const before = n.slice(Math.max(0, idx - 2), idx);
+                if (!/[不难以无]/.test(before)) return true;
+                idx = n.indexOf(term, idx + 1);
+            }
         }
         return false;
     }
 
-    // ----- 维度C -----
-    function detectC(text) {
-        const hasPhoto = hasAny(text, ['光呼吸']);
-        if (!hasPhoto) return false;
-        const extra = ['rubisco', 'rubp', 'r酶', 'o₂', '氧气', '抑制', '竞争', '净固碳', '净光合'];
-        return hasAny(text, extra);
-    }
-
-    // ----- 维度D -----
+    // ----- D 失水矛盾主线（完整：气孔+失水+环境缺水）-----
     function detectD(text) {
-        return hasAny(text, KW.D[0]) && hasAny(text, KW.D[1]);
+        const n = normalizeText(text);
+        return n.includes('气孔') && hasAny(text, KW.D_loss) && hasAny(text, KW.D_env);
     }
 
-    // ----- 维度E（提及 vs 展开）-----
-    function detectE_mention(text) {
-        return hasAny(text, KW.E_mention);
+    // 主线核心（气孔+失水，供水平1判定）
+    function detectDcore(text) {
+        const n = normalizeText(text);
+        return n.includes('气孔') && hasAny(text, KW.D_loss);
     }
 
-    function detectE_detail(text) {
-        let count = 0;
-        for (const group of KW.E_detail) {
-            if (hasAny(text, group)) count++;
-        }
-        return count >= 2;
+    // ----- W 兼顾权衡（优势面 + 转折/限制）-----
+    function detectAdv(text) {
+        const n = normalizeText(text);
+        if (/(吸收|摄取|摄入|固定|获取|利用)[^]{0,8}co2/.test(n)) return true;
+        if (/(固碳|光合|收益|碳汇)[^]{0,8}(提高|增强|提升|更多|有利)/.test(n)) return true;
+        return ['固碳', '光合', '碳反应', 'c3', '苹果酸脱羧', '脱羧', '抑制光呼吸', '光呼吸减弱', '光呼吸减少', '光呼吸'].some(k => n.includes(k));
     }
 
-    // ----- 维度F -----
-    function detectF(text) {
-        return hasAny(text, KW.F[0]) && hasAny(text, KW.F[1]);
+    function detectW(text) {
+        return detectAdv(text) && hasAny(text, KW.W_tradeoff);
+    }
+
+    // ----- C 层级因果链（基因层 + 摄入/失水同步或定量比较）-----
+    function detectC(text) {
+        const n = normalizeText(text);
+        if (!KW.C_gene.some(k => n.includes(k))) return false;
+        return KW.C_compare.some(k => n.includes(k)) ||
+            /(固碳|光合|收益|碳汇)[^]{0,14}(远?小于|低于|无法弥补|难以弥补|不能弥补)/.test(n) ||
+            /(失水|耗水|蒸腾|水分散失)[^]{0,12}(远?大于|超过|高于)/.test(n);
+    }
+
+    // ----- E 时空分离本质 -----
+    function detectE(text) {
+        if (hasAny(text, KW.E_term)) return true;
+        return hasAny(text, KW.E_loss) && hasAny(text, KW.E_value);
+    }
+
+    // ----- T 适应与权衡总括 -----
+    function detectT(text) {
+        return hasAny(text, KW.T);
     }
 
     // ================================================================
-    //  3. 综合评分（最终版）
+    //  3. 综合评分
     // ================================================================
 
     function evaluateAnswer(text) {
         const t = text || '';
 
-        const feasible = hasFeasible(t);
-        const implicitA = hasImplicitA(t);
-        const A = feasible || implicitA;          // 用于水平2/3
-
-        const B = detectB(t);
-        const C = detectC(t);
+        const Jneg = detectJneg(t);
+        const Jpos = detectJpos(t);
         const D = detectD(t);
-        const E_mention = detectE_mention(t);
-        const E_detail = detectE_detail(t);
-        const E = E_detail;                       // 水平2/3用展开
-        const F = detectF(t);
+        const Dcore = detectDcore(t);
+        const W = detectW(t);
+        const C = detectC(t);
+        const E = detectE(t);
+        const T = detectT(t);
 
-        const dims = { A: A, B, C, D, E, F };
-        const count = Object.values(dims).filter(Boolean).length;
+        const dims = { J: Jneg, D: D, W: W, C: C, E: E, T: T };
+        const errors = detectConceptErrors(t);
 
         let level = 0;
 
-        // ---- 水平1：B + E_mention（无需“可行”） ----
-        if (B && E_mention) {
+        // ---- 水平1：明确判断（适合/不适合均可）+ 单一角度论据（量表：因果链1~2个环节即可）----
+        const nt = normalizeText(t);
+        const singleArg = Dcore || detectAdv(t) || hasAny(t, KW.D_loss) || hasAny(t, KW.D_env) ||
+            nt.includes('气孔') || KW.C_gene.some(k => nt.includes(k));
+        if ((Jneg || Jpos) && singleArg) {
             level = 1;
-        } else {
-            level = 0;
         }
 
-        // ---- 水平2：A（明确或隐含）+（D或E_detail）+ 总维度≥4 ----
-        if (A && (D || E) && count >= 4) {
+        // ---- 水平2：判断"不适合" + 失水主线完整 + 兼顾权衡 ----
+        if (Jneg && D && W) {
             level = 2;
         }
 
-        // ---- 水平3：A（明确或隐含）+ 全部6个维度 ----
-        if (A && B && C && D && E && F) {
+        // ---- 水平3：在水平2基础上 + 层级因果链 + 本质（时空分离 或 适应权衡）----
+        if (Jneg && D && W && C && (E || T)) {
             level = 3;
         }
 
-        // 特殊：如果明确“不可行”且无任何灌溉条件，强制降为0
-        const hasNegate = hasAny(t, ['不可行', '不能', '无法', '不适宜']);
-        const hasAnyIrri = hasAny(t, KW.A_implicit_irri) || hasAny(t, KW.E_mention);
-        if (hasNegate && !hasAnyIrri) {
-            level = 0;
+        // ---- 封顶规则1：判断"适合"（无论论据多丰富，不超过水平1）----
+        if (Jpos && !Jneg) {
+            level = Math.min(level, 1);
+        }
+
+        // ---- 封顶规则2：科学性错误（因果颠倒/概念混淆，不超过水平1）----
+        if (errors.length > 0) {
+            level = Math.min(level, 1);
         }
 
         return {
             level: level,
             dims: dims,
-            A: A,
-            implicitA: implicitA,
-            E_mention: E_mention,
-            E_detail: E_detail,
-            count: count
+            Jneg: Jneg,
+            Jpos: Jpos,
+            D: D,
+            Dcore: Dcore,
+            W: W,
+            C: C,
+            E: E,
+            T: T,
+            errors: errors
         };
     }
 
@@ -803,23 +809,33 @@
 
     function detectConceptErrors(text) {
         const errors = [];
-        const t = text || '';
+        const n = normalizeText(text);
 
-        if (hasAny(t, ['pepc', '磷酸烯醇式丙酮酸羧化酶', 'pep羧化酶']) &&
-            hasAny(t, ['o₂', '氧气', '竞争']) &&
-            hasAny(t, ['光呼吸'])) {
+        // ① 敲除OsSLAC1却表述为"促进气孔关闭"（方向颠倒）
+        if (/(敲除|slac1?)[^]{0,28}(促进|增强|加强|有利|便于|更容易|提高)[^]{0,14}关闭/.test(n) &&
+            !/(无法|不能|难以|缺陷|丧失|受阻|失去)[^]{0,6}关闭/.test(n)) {
             errors.push({
-                type: 'enzyme_confusion',
-                message: '⚠️ 科学表述提醒：与O₂竞争、抑制光呼吸的酶是**Rubisco（R酶）**，而非PEPC。PEPC主要在夜间固定CO₂，不参与与O₂的竞争。建议将“PEPC”改为“Rubisco”或“R酶”。'
+                type: 'slac_direction',
+                message: '⚠️ 科学表述提醒：OsSLAC1是控制气孔**关闭**的关键基因，敲除后气孔关闭功能缺陷、白天气孔持续开放（气孔导度增大），而不是促进气孔关闭。'
             });
         }
 
-        if (hasAny(t, ['pepc', '磷酸烯醇式丙酮酸羧化酶', 'pep羧化酶']) &&
-            hasAny(t, ['光呼吸']) &&
-            !hasAny(t, ['rubisco', 'rubp', 'r酶'])) {
+        // ② CAM昼夜时序颠倒（白天气孔打开合成/储存苹果酸）
+        if (/白天[^]{0,18}(打开|开放|张开)[^]{0,20}(合成|储存|形成|积累)[^]{0,6}苹果酸/.test(n)) {
             errors.push({
-                type: 'enzyme_missing',
-                message: '⚠️ 科学表述提醒：光呼吸的抑制主要与**Rubisco（R酶）**有关，建议确认是否将PEPC与Rubisco混淆。PEPC主要负责夜间CO₂固定。'
+                type: 'cam_timing',
+                message: '⚠️ 科学表述提醒：CAM途径在**夜间**开放气孔固定CO₂合成苹果酸储存在液泡，**白天**气孔关闭、苹果酸脱羧释放CO₂。"白天气孔打开合成苹果酸"颠倒了昼夜时序。'
+            });
+        }
+
+        // ③ PEPC与O₂竞争（应为Rubisco）：需O₂出现、PEPC与"竞争/抑制"紧邻(≤16字符)、且全文未提Rubisco，避免误伤正确表述
+        const hasPepc = hasAny(text, ['pepc', '磷酸烯醇式丙酮酸羧化酶', 'pep羧化酶']);
+        const hasRubi = hasAny(text, ['rubisco', 'rubp', 'r酶']);
+        if (hasPepc && !hasRubi && hasAny(text, ['o2', '氧气']) &&
+            /(pepc|pep羧化酶|磷酸烯醇式丙酮酸羧化酶)[^]{0,16}(竞争|抑制)/.test(n)) {
+            errors.push({
+                type: 'enzyme_confusion',
+                message: '⚠️ 科学表述提醒：与O₂竞争、抑制光呼吸的酶是**Rubisco（R酶）**，而非PEPC。PEPC主要在夜间固定CO₂，不参与与O₂的竞争。'
             });
         }
 
@@ -830,88 +846,65 @@
     //  5. 反馈内容
     // ================================================================
 
-    function getFeedback(level, dims, A, implicitA, E_mention, E_detail, text) {
+    function getFeedback(level, dims, Jpos, errors) {
         const dimLabels = {
-            A: '可行性前提' + (A ? (implicitA ? '（隐含）' : '（明确）') : ''),
-            B: 'CAM代谢机制',
-            C: '光呼吸抑制',
-            D: '水分失衡矛盾',
-            E: '滴灌补偿原理' + (E_detail ? '（展开）' : E_mention ? '（提及）' : ''),
-            F: '协同与双碳'
+            J: '论点判断（不适合）',
+            D: '失水矛盾主线',
+            W: '兼顾权衡',
+            C: '层级因果链',
+            E: '时空分离本质',
+            T: '适应与权衡总括'
         };
 
         const activeDims = Object.entries(dims)
-            .filter(([k, v]) => v)
-            .map(([k]) => dimLabels[k])
-            .filter(Boolean);
-
-        const errors = detectConceptErrors(text);
+            .filter(([, v]) => v)
+            .map(([k]) => dimLabels[k]);
 
         let adviceText = '';
+        if (errors && errors.length > 0) {
+            adviceText += errors.map(e => e.message).join('\n');
+        }
+
         if (level === 0) {
-            if (!detectB(text) && !E_mention) {
-                adviceText = '📌 建议从“CAM代谢机制”和“灌溉技术配合”两个角度补充分析。';
-            } else if (!detectB(text)) {
-                adviceText = '📌 你提到了灌溉，但还需要分析CBP水稻的固碳机制（CAM途径如何增强光合）。';
-            } else if (!E_mention) {
-                adviceText = '📌 你分析了CAM机制，但忽略了灌溉条件——在沙漠种植，必须说明膜下滴灌如何解决缺水问题。';
-            } else {
-                adviceText = '📌 你的回答还比较简略，建议从“代谢机制 → 灌溉补偿”两个核心环节充实论证。';
-            }
-            if (hasAny(text, ['不可行', '不能', '无法', '不适宜']) && !hasAny(text, KW.A_implicit_irri) && !E_mention) {
-                adviceText += '\n\n💡 建议尝试从“在有灌溉条件下是否可行”的角度重新评估该方案。';
-            }
+            adviceText += (adviceText ? '\n\n' : '') +
+                '📌 作答建议：先亮明论点（"适合"或"不适合"），再从"失水矛盾""固碳优势"等角度给出论据，形成"论点＋论据"的完整论证。';
         } else if (level === 1) {
-            adviceText = '📌 你已覆盖CAM机制和灌溉技术。建议进一步展开：\n• 滴灌的具体原理（地膜覆盖减少蒸发、水分聚集根区、盐分下移）；\n• CBP水稻气孔开度增大带来的额外蒸腾需求；\n• 高CO₂如何抑制光呼吸、提高净固碳。';
+            if (Jpos) {
+                adviceText += (adviceText ? '\n\n' : '') +
+                    '📌 你的判断是"适合"：仅从固碳优势单一角度论证，最高达到水平1。建议进一步分析气孔无法关闭带来的失水矛盾，重新权衡后再作判断。';
+            } else {
+                adviceText += (adviceText ? '\n\n' : '') +
+                    '📌 你已明确判断并给出论据，但角度单一。冲击水平2需要：①判断"不适合"；②补全失水主线（敲除OsSLAC1→白天气孔无法关闭→高温、强光、干燥下蒸腾失水剧增→沙漠边缘水资源匮乏、易水分亏缺）；③兼顾权衡（虽利于摄取CO₂、抑制光呼吸，但沙漠边缘的限制因子是水分）。';
+            }
         } else if (level === 2) {
-            const missing = [];
-            const dimMap = {
-                B: 'CAM代谢机制（夜间固定CO₂→苹果酸→白天脱羧释放）',
-                C: '光呼吸抑制机制（高CO₂如何抑制Rubisco与O₂结合）',
-                D: '气孔失水矛盾（气孔导度增大→蒸腾失水增多）',
-                E: '滴灌工作原理（地膜覆盖、根区水分、盐分迁移）',
-                F: '协同与双碳关联'
-            };
-            for (const [key, label] of Object.entries(dimMap)) {
-                if (!dims[key]) missing.push(label);
+            const tips = [];
+            if (!dims.C) tips.push('• 层级因果链：基因敲除→气孔关闭功能缺陷→白天持续开放→CO₂摄入与水分散失同步增多→固碳增量远小于失水增量→无法维持水分平衡');
+            if (!dims.E && !dims.T) {
+                tips.push('• 抓住本质：CBP"时空分离"的核心价值是白天气孔关闭以减少蒸腾，ΔCBP恰好破坏这一分离，固碳收益无法弥补耗水代价');
+            } else if (!dims.E) {
+                tips.push('• 用"时空分离"点明CBP节水的核心价值被ΔCBP破坏');
+            } else if (!dims.T) {
+                tips.push('• 适应与权衡总括：品种改良须与种植环境的水分条件相匹配，ΔCBP丧失了CAM对干旱环境的适应意义');
             }
-            if (missing.length === 0) {
-                adviceText = '📌 可深入思考CBP高光效带来的额外蒸腾需求，以及膜下滴灌如何通过“覆膜保水、根区供水、盐分下移”实现精准补偿。';
-            } else {
-                const suggestions = missing.map(m => {
-                    if (m.includes('CAM')) return '• 补充CAM代谢的时序细节（夜间固定→苹果酸储存→白天脱羧释放）';
-                    if (m.includes('光呼吸')) return '• 补充光呼吸抑制机制（高CO₂如何竞争性抑制Rubisco与O₂结合）';
-                    if (m.includes('气孔')) return '• 补充气孔失水矛盾（光合增强为何伴随更多蒸腾消耗）';
-                    if (m.includes('滴灌')) return '• 补充滴灌的工作原理（地膜覆盖减少蒸发、滴灌使水分聚集根区、盐分下移）';
-                    if (m.includes('协同')) return '• 补充协同与双碳的关联（高碳汇与节水如何共同服务于双碳目标）';
-                    return '• 补充相关维度的分析';
-                });
-                adviceText = '📌 冲击水平3需要完善以下环节：\n' + suggestions.join('\n');
-            }
-        } else if (level === 3) {
-            if (errors.length > 0) {
-                adviceText = '📌 ' + errors.map(e => e.message).join('\n');
-            } else {
-                adviceText = '';
-            }
+            adviceText += (adviceText ? '\n\n' : '') + '📌 冲击水平3需要完善：\n' + tips.join('\n');
         }
 
         const base = {
             0: {
                 label: '水平0 · 待完善',
-                feedback: '你的回答尚未达到基本要求。' + (activeDims.length > 0 ? '\n\n已识别部分：' + activeDims.join('、') : '')
+                feedback: '你的回答尚未形成"论点＋论据"的完整论证。' + (activeDims.length > 0 ? '\n\n已识别部分：' + activeDims.join('、') : '')
             },
             1: {
                 label: '水平1 · 基础达标',
-                feedback: '你已具备基本判断，并覆盖了核心要点。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
+                feedback: '你已作出明确判断，并从单一角度给出了论据。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
             },
             2: {
                 label: '水平2 · 进阶良好',
-                feedback: '你的分析已经涵盖了多个核心维度，论证较为系统。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
+                feedback: '你已判断"不适合"，失水主线完整并兼顾权衡，论证较为系统。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
             },
             3: {
                 label: '水平3 · 卓越',
-                feedback: '🎉 你的回答已达到最高水平，逻辑严密，完整覆盖了可行性前提、CAM代谢、光呼吸抑制、水分失衡矛盾、滴灌补偿原理及协同双碳目标。' +
+                feedback: '🎉 论点明确"不适合"，论据贯穿基因→气孔→蒸腾与固碳→水分平衡多个层级，并抓住CAM"时空分离"的节水本质，从适应与权衡角度作出综合决策。' +
                     '\n\n✅ 已识别：' + activeDims.join('、')
             }
         };
@@ -928,7 +921,7 @@
     //  6. 本地存储与历史管理
     // ================================================================
 
-    const STORAGE_KEY = 'z5001_history';
+    const STORAGE_KEY = 'z5001_v2_history';
 
     function getHistory() {
         try {
@@ -963,7 +956,7 @@
     //  7. UI 渲染
     // ================================================================
 
-    function renderResult(level, feedbackText, adviceText, dims, A, implicitA, E_mention, E_detail) {
+    function renderResult(level, feedbackText, adviceText, dims) {
         const area = document.getElementById('resultArea');
         area.style.display = 'block';
         area.classList.add('show');
@@ -992,18 +985,8 @@
 
         const detail = document.getElementById('detailHint');
         if (dims) {
-            const parts = [];
-            for (const [key, val] of Object.entries(dims)) {
-                let labelKey = key;
-                if (key === 'A') {
-                    labelKey += A ? (implicitA ? '✅隐含' : '✅明确') : '⬜';
-                } else if (key === 'E') {
-                    labelKey += E_detail ? '✅展开' : E_mention ? '⬜提及' : '⬜';
-                } else {
-                    labelKey += val ? '✅' : '⬜';
-                }
-                parts.push(labelKey);
-            }
+            const dimShort = { J: '论点', D: '失水主线', W: '权衡', C: '层级链', E: '本质', T: '总括' };
+            const parts = Object.entries(dims).map(([k, v]) => dimShort[k] + (v ? '✅' : '⬜'));
             detail.textContent = '维度: ' + parts.join(' ');
         } else {
             detail.textContent = '维度检测';
@@ -1060,11 +1043,11 @@
                 if (el.classList.contains('expand')) {
                     el.classList.remove('expand');
                     const preview = record.text.length > 80 ? record.text.slice(0, 80) + '…' : record.text;
-                    el.textContent = preview.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    el.textContent = preview;
                     this.textContent = '展开全文';
                 } else {
                     el.classList.add('expand');
-                    el.textContent = record.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    el.textContent = record.text;
                     this.textContent = '收起';
                 }
             });
@@ -1095,9 +1078,9 @@
 
         const result = evaluateAnswer(text);
         const level = result.level;
-        const fbData = getFeedback(level, result.dims, result.A, result.implicitA, result.E_mention, result.E_detail, text);
+        const fbData = getFeedback(level, result.dims, result.Jpos, result.errors);
 
-        renderResult(level, fbData.feedback, fbData.advice, result.dims, result.A, result.implicitA, result.E_mention, result.E_detail);
+        renderResult(level, fbData.feedback, fbData.advice, result.dims);
         addRecord(text, level, fbData.feedback, fbData.advice);
         renderHistory();
         updateWordCount();
@@ -1165,24 +1148,6 @@
         if (getHistory().length === 0) {
             input.focus();
         }
-
-        // 双击填充示例
-        const examples = [
-            'CBP水稻夜晚气孔打开吸收较多CO2合成苹果酸在液泡储存，白天液泡中苹果酸脱羧，释放CO2，使C5固定更多CO2参与碳反应，提高水稻固碳能力；但是CBP水稻气孔开度更大，固碳量更多，但是蒸腾失水也更多，所以对灌溉要求更高，配合膜下滴灌，CBP水稻和膜下滴灌二者协同互补，落实双碳目标。',
-            'CBP水稻通过CAM途径提高固碳能力。',
-            '配合膜下滴灌。',
-            'CBP水稻CAM途径提高固碳，配合膜下滴灌。',
-            '可行，CBP水稻夜晚气孔打开吸收较多CO2合成苹果酸在液泡储存，白天液泡中苹果酸脱羧，释放CO2，与O2竞争R酶，减弱光呼吸，使C5固定更多CO2参与碳反应，提高水稻固碳能力；但是CBP水稻气孔开度更大，固碳量更多，但是蒸腾失水也更多，所以对灌溉要求更高，配合膜下滴灌减少水分蒸发，促进盐分迁移至土壤深层，提高根部供水量并缓解盐胁迫，CBP水稻和膜下滴灌二者协同互补，落实双碳目标。'
-        ];
-        let exampleIdx = 0;
-        input.addEventListener('dblclick', function(e) {
-            if (input.value.trim() === '' || confirm('💡 填充示例答案？')) {
-                input.value = examples[exampleIdx % examples.length];
-                exampleIdx++;
-                updateWordCount();
-                input.focus();
-            }
-        });
     });
 
 })();
