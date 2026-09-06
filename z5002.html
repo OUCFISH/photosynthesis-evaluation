@@ -830,7 +830,7 @@
 
     // ================= 各环节评分 =================
 
-    // 环节2：假设—预期（两组必填，两项齐全即水平三）
+    // 环节2：假设—预期（两组必填，两项齐全即水平二，本题最高）
     function evalStage2() {
         const pairs = getPredictionPairs();
         const valid = pairs.filter(p =>
@@ -845,12 +845,12 @@
         if (!anyFilled) return { level: 0, ok: false, lines: ['❌ 未填写预期。'] };
 
         if (valid.length >= 2) {
-            lines.push('🌟 两项"指标+方向"齐全，与假设匹配，达到水平三！');
+            lines.push('🌟 两项"指标+方向"齐全，与假设匹配，达到水平二（本题最高水平）！');
             if (valid.some(p => hasAny(p.ind, ['sod']))) {
                 lines.push('🔍 注意：你预测了 SOD——"更高"（清除能力强）或"更低"（损伤轻、无需大量诱导）在机理上都自洽，究竟哪个对？第(5)题的数据见分晓。');
             }
             lines.push('⏳ 记住你的预期——第(5)题作答时可对照表中数据检验。');
-            return { level: 3, ok: true, lines: lines };
+            return { level: 2, ok: true, lines: lines };
         }
 
         lines.push('✅ 已写出 ' + valid.length + ' 项"指标+方向"的预期。');
@@ -892,24 +892,23 @@
             if (!saltHit) lines.push('💡 请写明盐浓度设置（如 0、2、3、4、5 g·kg⁻¹ 梯度）。');
             return { level: 0, ok: false, lines: lines };
         }
-        lines.push('✅ 方案包含品种（P、F）与盐浓度设置——达到水平一。');
-        const miss2 = [];
-        if (!ctrlHit) miss2.push('设置 0 g·kg⁻¹ 对照组');
-        if (!ivdvHit) miss2.push('写明自变量（盐浓度/品种）与因变量（检测的生理指标）');
-        if (ctrlHit && ivdvHit) {
-            lines.push('✅ 自变量、因变量明确，且设置 0 g·kg⁻¹ 对照组——达到水平二。');
-            const miss3 = [];
-            if (!uniHit) miss3.push('选取长势一致的水稻');
-            if (!sepHit) miss3.push('同一盐浓度下两品种分区域种植');
-            if (!repHit) miss3.push('每组多株测定求平均值');
-            if (miss3.length === 0) {
-                lines.push('🌟 方案完整严谨（长势一致、对照组、分区域种植、多株求平均）——达到水平三！');
-                return { level: 3, ok: true, lines: lines };
-            }
-            lines.push('💡 冲击水平三，还需：' + miss3.join('；') + '。');
+        if (!ctrlHit || !ivdvHit) {
+            const miss1 = [];
+            if (!ctrlHit) miss1.push('设置 0 g·kg⁻¹ 对照组');
+            if (!ivdvHit) miss1.push('写明自变量（盐浓度/品种）与因变量（检测的生理指标）');
+            lines.push('⚠️ 方案已含品种与盐浓度，但尚未达到水平一——水平一还要求：' + miss1.join('；') + '。');
+            return { level: 0, ok: false, lines: lines };
+        }
+        lines.push('✅ 品种（P、F）与盐浓度设置齐全，自变量、因变量明确，且设置 0 g·kg⁻¹ 对照组——达到水平一。');
+        const miss3 = [];
+        if (!uniHit) miss3.push('选取长势一致的水稻');
+        if (!sepHit) miss3.push('同一盐浓度下两品种分区域种植');
+        if (!repHit) miss3.push('每组多株测定求平均值');
+        if (miss3.length === 0) {
+            lines.push('🌟 方案完整严谨（长势一致、0 对照组、分区域种植、多株求平均）——达到水平二（本题最高水平）！');
             return { level: 2, ok: true, lines: lines };
         }
-        lines.push('⚠️ 达到水平一。补齐后升水平二：' + miss2.join('；') + '。');
+        lines.push('💡 升水平二还需：' + miss3.join('；') + '。');
         return { level: 1, ok: false, lines: lines };
     }
 
@@ -921,10 +920,14 @@
         if (selected.length === 0) {
             return { level: 0, ok: false, lines: ['❌ (3) 未选择仪器，请至少选择 2 项。'] };
         }
+        // 先剔除仪器名与序号再匹配指标——仪器名自带指标词（②电导率仪、③光合仪、
+        // ④SOD活性检测试剂盒），只写仪器名不应算"说清了检测指标"
+        const n4 = normalizeText(t4)
+            .replace(/便携式光合仪|光合仪|sod活性检测试剂盒|活性检测试剂盒|试剂盒|分光光度计|电导率仪|①|②|③|④/g, ' ');
         const matched = [];
         for (const id of selected) {
             const info = INSTRUMENT_INFO[id];
-            if (info && info.indicators.some(ind => hasAny(t4, [ind]))) matched.push(info.name);
+            if (info && info.indicators.some(ind => n4.includes(ind.toLowerCase()))) matched.push(info.name);
         }
 
         // 仪器-指标搭配检测：每个分句只归属一台仪器时，检查"测+他家指标"
@@ -961,8 +964,9 @@
             lines.push('❌ (3) 已选 ' + selected.length + ' 项仪器，但只有 ' + matched.length + ' 项在理由中说清了检测指标。请为每项仪器写明"仪器→指标→与耐盐性的关系"。');
             return { level: 0, ok: false, lines: lines };
         }
-        const mechCount = countUnique(t4, MECH_WORDS), trendCount = countUnique(t4, TREND_WORDS);
-        const l4 = mechCount >= 2 ? 3 : (mechCount >= 1 || trendCount >= 2) ? 2 : 1;
+        const mechCount = new Set(MECH_WORDS.filter(w => n4.includes(w))).size;
+        const trendCount = new Set(TREND_WORDS.filter(w => n4.includes(w))).size;
+        const l4 = (mechCount >= 1 || trendCount >= 2) ? 2 : 1;
         lines.push('✅ (3) 仪器与指标匹配正确：' + matched.join('、') + '；理由达水平' + l4 + (mechCount >= 2 ? '（机制层面阐述）' : trendCount >= 2 ? '（有变化趋势）' : '（较笼统）') + '。');
         if (mechCount < 2) lines.push('   💡 提升建议：说明指标变化背后的生理意义（如"脯氨酸积累有助于维持渗透平衡""电导率升高反映膜损伤加重"）。');
         return { level: l4, ok: l4 >= 2, lines: lines };
@@ -995,29 +999,39 @@
             return { level: 0, ok: false, lines: lines };
         }
         if (hasCtrl && hasReplicate && hasAverage) {
-            lines.push('🎉 表格包含品种（F、P）、盐浓度；实验组(2、3、4、5)与对照组(0)分组齐全；指标≥2 项；且设置了重复和平均值，实验设计科学规范，达到水平三。');
-            lines.push('📊 ' + detail);
-            return { level: 3, ok: true, lines: lines };
-        }
-        if (hasCtrl) {
-            lines.push('✅ 达到水平二：品种、盐浓度齐全，实验组与对照组分组齐全。');
-            lines.push('⚠️ 建议同时勾选"设置重复"和"计算平均值"（两者须同时具备），使数据更可靠，冲击水平三。');
+            lines.push('🎉 表格包含品种（F、P）、盐浓度；实验组(2、3、4、5)与对照组(0)分组齐全；指标≥2 项；且设置了重复和平均值——达到水平二（本题最高水平）。');
             lines.push('📊 ' + detail);
             return { level: 2, ok: true, lines: lines };
         }
-        lines.push('✅ 达到水平一：品种完整、实验组(2、3、4、5)齐全、指标≥2 项。');
-        lines.push('⚠️ 缺少对照组(0 g·kg⁻¹)，增设后达到水平二。');
+        if (hasCtrl) {
+            lines.push('✅ 达到水平一：品种、盐浓度齐全，实验组与对照组分组齐全，指标≥2 项。');
+            lines.push('💡 升水平二：同时勾选"设置重复"和"计算平均值"（两者须同时具备），使数据更可靠。');
+            lines.push('📊 ' + detail);
+            return { level: 1, ok: false, lines: lines };
+        }
+        lines.push('⚠️ 尚未达到水平一：实验组(2、3、4、5)已齐全，但水平一即要求实验组与对照组分组齐全——请勾选 0 g·kg⁻¹ 对照组。');
         lines.push('📊 ' + detail);
-        return { level: 1, ok: false, lines: lines };
+        return { level: 0, ok: false, lines: lines };
     }
 
     // 品种选择识别：关键词 + 空格/短语容错（"选择 P 品种""更适合的是P"），并排除"选P不选F"式否定
     function choiceHit(n, letter, extraKw) {
+        // 比较句判定：仅当"F比P"之后紧跟"更适合/更耐盐/更好/更优/更强"等择优表述
+        // 才视为选F（选P对称）。数据比较句如"F比P的电导率高"不触发，避免误杀正确结论
+        const other = letter === 'f' ? 'p' : 'f';
+        const cmpRe = new RegExp(letter + '比' + other + '[^a-z]{0,4}(?:更?适合|更?耐盐|更?好|更?优|更强)', 'g');
+        let mc;
+        while ((mc = cmpRe.exec(n)) !== null) {
+            const before = n.slice(Math.max(0, mc.index - 2), mc.index);
+            if (!/[不没非]/.test(before)) return true;
+        }
         for (const kw of extraKw) {
             let idx = n.indexOf(kw);
             while (idx !== -1) {
                 const before = n.slice(Math.max(0, idx - 2), idx);
-                if (!/[不没非]/.test(before)) return true;
+                // 关键词以字母开头且前邻"于/比"时，字母是比较对象（如"P比F更耐盐"中的F），不计为选F
+                const isCompObject = kw[0] === letter && idx > 0 && /[于比]/.test(n[idx - 1]);
+                if (!/[不没非]/.test(before) && !isCompObject) return true;
                 idx = n.indexOf(kw, idx + 1);
             }
         }
@@ -1046,7 +1060,7 @@
         } else {
             const n5 = normalizeText(t);
             const pHit = choiceHit(n5, 'p', ['p品种', '品种p', '选择p', '选p', '应选p', '种植p', 'p更耐盐', 'p耐盐', 'p更适', '适合p', 'p优于', 'p更好']);
-            const fHit = choiceHit(n5, 'f', ['选择f', '选f', '应选f', 'f更适', 'f更耐盐', 'f优于', 'f更好', 'f比p']);
+            const fHit = choiceHit(n5, 'f', ['选择f', '选f', '应选f', 'f更适', 'f更耐盐', 'f优于', 'f更好']);
             const chooseP = pHit && !fHit;
             const indCount = countUnique(t, INDICATOR_WORDS);
             const trendCount = countUnique(t, TREND_WORDS.concat(['低', '高', '多', '少', '强', '弱', '升', '降']));
@@ -1058,22 +1072,17 @@
                 lines.push('✅ (5) 结论正确：选择 P 品种。');
                 if (indCount === 0) {
                     lvl = 0;
-                    lines.push('❌ 仅有结论、未结合任何生理指标分析。请至少说出 1～2 项指标及简单理由（如叶片电导率、脯氨酸含量相对 F 的变化），才能达到水平一。');
-                } else if (indCount < 2 || trendCount < 1) {
+                    lines.push('❌ 仅有结论、未结合任何生理指标分析。水平一即要求至少 2 项指标并说明理由、进行数据对比（如叶片电导率、脯氨酸含量相对 F 的变化）。');
+                } else if (indCount >= 3 && trendCount >= 1 && mechCount >= 1 && sodInsight) {
+                    lvl = 2;
+                    lines.push('🌟 你解释了"SOD 活性低反而是好事"这一反直觉现象（同一盐度下 P 显著低于 F，5 g·kg⁻¹ 时 323.50 vs 390.20——P 电导率低→膜损伤轻→活性氧少→SOD 无需大量诱导），形成完整因果网络——达到水平二（本题最高水平）！');
+                } else if (indCount >= 2 && trendCount >= 1 && (mechCount >= 1 || n5.includes('光合'))) {
                     lvl = 1;
-                    lines.push('⚠️ 水平一：请结合表中指标进行比较（如电导率、脯氨酸、气孔导度相对 F 的变化方向），再下结论。');
-                } else if (indCount >= 3 && mechCount >= 1) {
-                    if (sodInsight) {
-                        lvl = 3;
-                        lines.push('🌟 你解释了"SOD 活性低反而是好事"这一反直觉现象（同一盐度下 P 显著低于 F，5 g·kg⁻¹ 时 323.50 vs 390.20——P 电导率低→膜损伤轻→活性氧少→SOD 无需大量诱导），形成完整因果网络，达到水平三！');
-                    } else {
-                        lvl = 2;
-                        lines.push('✅ 已进行多指标数据对比并联系生理机制，达到水平二。');
-                        lines.push('💡 冲击水平三：试解释反直觉现象——直觉上"SOD 越高越耐盐"，但同一盐度下 F 显著高于 P（5 g·kg⁻¹：390.20 vs 323.50），F 恰是活性氧爆发、被动防御的一方；P 的 SOD 低而稳，说明膜损伤轻、活性氧少。"SOD 活性低"反而是耐受的表现。');
-                    }
+                    lines.push('✅ 达到水平一：至少 2 项指标并说明理由，进行了数据对比并建立指标与光合作用的联系。');
+                    lines.push('💡 升水平二：至少 3 项指标多角度综合分析，并试解释反直觉现象——直觉上"SOD 越高越耐盐"，但同一盐度下 F 显著高于 P（5 g·kg⁻¹：390.20 vs 323.50），F 恰是活性氧爆发、被动防御的一方；P 的 SOD 低而稳，说明膜损伤轻、活性氧少。"SOD 活性低"反而是耐受的表现。');
                 } else {
-                    lvl = 1;
-                    lines.push('⚠️ 水平一~二之间：建议使用≥3 项指标，并将指标变化与膜完整性、渗透调节、光合能力等机制建立因果联系。');
+                    lvl = 0;
+                    lines.push('⚠️ 尚未达到水平一：水平一要求至少 2 项指标＋数据对比＋与光合作用建立因果联系（如电导率低→膜损伤轻、脯氨酸积累→渗透调节强）。');
                 }
             }
         }

@@ -244,8 +244,8 @@
         .result-area {
             background: #fafff7;
             border-radius: 20px;
-            padding: 22px 28px;
-            margin-bottom: 28px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
             border: 2px solid #dce8ce;
             display: none;
         }
@@ -263,15 +263,15 @@
         .result-area .result-header {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
         }
 
         .result-area .level-badge {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 700;
-            padding: 4px 24px;
+            padding: 2px 16px;
             border-radius: 40px;
             background: #d4e8c4;
             color: #1f4a1a;
@@ -289,12 +289,12 @@
 
         .result-area .feedback-box {
             background: #f4faf0;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin: 12px 0 10px;
+            border-radius: 12px;
+            padding: 8px 14px;
+            margin: 6px 0 5px;
             border-left: 4px solid #7cad5a;
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 13px;
+            line-height: 1.5;
             color: #1e3a1a;
             white-space: pre-wrap;
         }
@@ -302,36 +302,36 @@
         .result-area .feedback-box .fb-title {
             font-weight: 600;
             color: #3d6a30;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .result-area .advice-box {
             background: #fdf8ee;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin: 12px 0 6px;
+            border-radius: 12px;
+            padding: 8px 14px;
+            margin: 5px 0 3px;
             border-left: 4px solid #d4b87a;
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 13px;
+            line-height: 1.5;
             color: #4a3a2a;
         }
 
         .result-area .advice-box .adv-title {
             font-weight: 600;
             color: #8a7a3a;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .result-area .score-detail {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px 24px;
-            margin-top: 10px;
-            font-size: 14px;
+            gap: 6px 16px;
+            margin-top: 6px;
+            font-size: 12.5px;
             color: #3d5a3a;
             background: #eef6e8;
-            padding: 10px 18px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
         }
 
         .result-area .score-detail .dot {
@@ -519,8 +519,8 @@
             .container { padding: 20px 18px 28px; }
             .header-title h1 { font-size: 20px; }
             .question-area { padding: 18px; }
-            .result-area { padding: 18px; }
-            .result-area .level-badge { font-size: 22px; padding: 2px 18px; }
+            .result-area { padding: 12px; }
+            .result-area .level-badge { font-size: 18px; padding: 2px 14px; }
             .input-area textarea { min-height: 120px; font-size: 14px; }
             .btn { padding: 10px 24px; font-size: 15px; }
             .history-item { padding: 12px 14px; }
@@ -676,9 +676,37 @@
     }
 
     // ----- 论点判断 -----
-    // 明确判断"不适合"
+    // 明确判断"不适合"；若"不适合"出现在转述他人观点（有人认为/老师说等）且
+    // 学生自己的结论是"适合"，该次出现不计为论点否定，防止封顶规则被引文绕过
     function detectJneg(text) {
-        return hasAny(text, KW.Jneg);
+        const n = normalizeText(text);
+        return KW.Jneg.some(kw => {
+            const k = kw.toLowerCase();
+            let idx = n.indexOf(k);
+            while (idx !== -1) {
+                if (!isQuotedOpinion(n, idx)) return true;
+                idx = n.indexOf(k, idx + 1);
+            }
+            return false;
+        });
+    }
+
+    // 判断 n 中 idx 处的论点词是否位于转述语境（他人观点）内：
+    // 取距离最近的归属标记——第三人称主语（有人/老师等）或"认为/觉得"前无"我"
+    function isQuotedOpinion(n, idx) {
+        const w = n.slice(Math.max(0, idx - 10), idx);
+        let best = -1, kind = '';
+        for (const m of ['有人', '有同学', '别人', '他人', '老师', '部分人', '大多数']) {
+            const p = w.lastIndexOf(m);
+            if (p > best) { best = p; kind = 'agent'; }
+        }
+        for (const v of ['认为', '觉得']) {
+            const p = w.lastIndexOf(v);
+            if (p > best) { best = p; kind = 'verb'; }
+        }
+        if (best === -1) return false;
+        if (kind === 'agent') return true;
+        return !/我|本人/.test(w.slice(Math.max(0, best - 3), best));
     }
 
     // 判断"适合"（任一肯定表述前无"不、难"等否定）
@@ -892,20 +920,20 @@
         const base = {
             0: {
                 label: '水平0 · 待完善',
-                feedback: '你的回答尚未形成"论点＋论据"的完整论证。' + (activeDims.length > 0 ? '\n\n已识别部分：' + activeDims.join('、') : '')
+                feedback: '你的回答尚未形成"论点＋论据"的完整论证。' + (activeDims.length > 0 ? '\n已识别部分：' + activeDims.join('、') : '')
             },
             1: {
                 label: '水平1 · 基础达标',
-                feedback: '你已作出明确判断，并从单一角度给出了论据。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
+                feedback: '你已作出明确判断，并从单一角度给出了论据。' + (activeDims.length > 0 ? '\n✅ 已识别：' + activeDims.join('、') : '')
             },
             2: {
                 label: '水平2 · 进阶良好',
-                feedback: '你已判断"不适合"，失水主线完整并兼顾权衡，论证较为系统。' + (activeDims.length > 0 ? '\n\n✅ 已识别：' + activeDims.join('、') : '')
+                feedback: '你已判断"不适合"，失水主线完整并兼顾权衡，论证较为系统。' + (activeDims.length > 0 ? '\n✅ 已识别：' + activeDims.join('、') : '')
             },
             3: {
                 label: '水平3 · 卓越',
                 feedback: '🎉 论点明确"不适合"，论据贯穿基因→气孔→蒸腾与固碳→水分平衡多个层级，并抓住CAM"时空分离"的节水本质，从适应与权衡角度作出综合决策。' +
-                    '\n\n✅ 已识别：' + activeDims.join('、')
+                    '\n✅ 已识别：' + activeDims.join('、')
             }
         };
 
@@ -1025,7 +1053,6 @@
                     <div class="h-body">
                         <div class="h-text history-text" id="htext_${r.id}">${safePreview}</div>
                         <div class="h-meta">
-                            <span>🕒 ${r.time}</span>
                             <button class="toggle-text" data-id="${r.id}">展开全文</button>
                         </div>
                     </div>
